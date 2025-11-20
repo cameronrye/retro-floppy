@@ -1,0 +1,277 @@
+/* CSS Variables for dynamic sizing and theming */
+.silhouette {
+  width: var(--floppy-size);
+  height: var(--floppy-size);
+  min-width: var(--floppy-size);
+  min-height: var(--floppy-size);
+  background: var(--floppy-color);
+  border-radius: 3% 0 3% 3%;
+  position: relative;
+  border-top: var(--floppy-border) solid var(--floppy-highlight);
+  border-right: var(--floppy-border) solid var(--floppy-shadow);
+  border-bottom: var(--floppy-border) solid var(--floppy-shadow);
+  border-left: var(--floppy-border) solid var(--floppy-highlight);
+  transform: scaleX(1);
+  transition: transform 0.5s linear;
+  cursor: pointer;
+  contain: layout style paint;
+  clip-path: polygon(
+    0 0,
+    88.9% 0,
+    100% 11.1%,
+    100% 100%,
+    0 100%
+  );
+}
+
+.silhouette:hover {
+  filter: brightness(1.05);
+}
+
+.silhouette:active,
+.silhouette:focus {
+  outline: none;
+}
+
+
+
+.silhouette.selected {
+  box-shadow: 0 0 0 calc(var(--floppy-border) * 2) #4a9eff;
+}
+
+.silhouette.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.silhouette.static {
+  cursor: default;
+}
+
+.silhouette.static:active,
+.silhouette.static:focus {
+  transform: scaleX(1);
+}
+
+.silhouette::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(var(--floppy-size) * 0.111);
+  height: calc(var(--floppy-size) * 0.111);
+  background: linear-gradient(to bottom right, transparent 49%, var(--floppy-shadow) 49%, var(--floppy-shadow) 51%, transparent 51%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.decals .arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 calc(var(--floppy-size) * 0.0278) calc(var(--floppy-size) * 0.0556) calc(var(--floppy-size) * 0.0278);
+  border-color: transparent transparent var(--floppy-shadow) transparent;
+  position: absolute;
+  top: 6%;
+  left: 2%;
+}
+
+.decals .arrow::after {
+  content: "";
+  width: calc(var(--floppy-size) * 0.0278);
+  height: calc(var(--floppy-size) * 0.0361);
+  background: var(--floppy-shadow);
+  position: absolute;
+  transform: translate(-50%, 100%);
+}
+
+.decals .locks::before,
+.decals .locks::after {
+  content: "";
+  width: calc(var(--floppy-size) * 0.0333);
+  height: calc(var(--floppy-size) * 0.0333);
+  background: transparent;
+  position: absolute;
+  border-style: solid;
+  border-width: var(--floppy-border);
+  border-color: var(--floppy-shadow) var(--floppy-highlight) var(--floppy-highlight) var(--floppy-shadow);
+}
+
+.decals .locks::before {
+  bottom: 5%;
+  right: 3%;
+}
+
+.decals .locks::after {
+  bottom: 5%;
+  left: 3%;
+}
+
+.slideTrack {
+  width: 70%;
+  height: 35%;
+  background: transparent;
+  position: absolute;
+  top: calc(var(--floppy-border) * -1);
+  left: 45%;
+  transform: translateX(-50%);
+  border-bottom-left-radius: calc(var(--floppy-size) * 0.0133);
+  border-bottom-right-radius: calc(var(--floppy-size) * 0.0133);
+  overflow: hidden;
+}
+
+.slideBack {
+  background: var(--floppy-color);
+  width: 100%;
+  height: calc(100% - var(--floppy-border));
+  position: absolute;
+  bottom: calc(var(--floppy-border) * -1);
+  left: calc(var(--floppy-border) * -1);
+  border-bottom-left-radius: calc(var(--floppy-size) * 0.0133);
+  border-bottom-right-radius: calc(var(--floppy-size) * 0.0133);
+  border-right: var(--floppy-border) solid var(--floppy-highlight);
+  border-bottom: var(--floppy-border) solid var(--floppy-highlight);
+  border-left: var(--floppy-border) solid var(--floppy-shadow);
+}
+
+.drop {
+  width: 100%;
+  height: 3%;
+  position: absolute;
+  top: calc(var(--floppy-border) * -1);
+  left: calc(var(--floppy-border) * -1);
+  background: transparent;
+  border-right: var(--floppy-border) solid var(--floppy-highlight);
+  border-bottom: var(--floppy-border) solid var(--floppy-highlight);
+  border-left: var(--floppy-border) solid var(--floppy-shadow);
+}
+
+.slide {
+  background: var(--slide-color);
+  width: 75%;
+  height: 95%;
+  position: absolute;
+  bottom: 4%;
+  right: 1.5%;
+  border-radius: calc(var(--floppy-size) * 0.0133);
+  border-bottom: var(--floppy-border) solid var(--floppy-shadow);
+  border-left: var(--floppy-border) solid var(--floppy-highlight);
+  border-right: var(--floppy-border) solid var(--floppy-shadow);
+  transition: right 0.3s ease-out;
+}
+
+.silhouette:not(.static):hover .slide {
+  right: 25%;
+  transition: right 0.3s ease-out;
+}
+
+.cutout {
+  background: var(--floppy-color);
+  width: 22.5%;
+  height: 70%;
+  right: 12.5%;
+  top: 50%;
+  transform: translateY(-50%);
+  position: absolute;
+  box-sizing: border-box;
+  border-top: var(--floppy-border) solid var(--floppy-shadow);
+  border-left: var(--floppy-border) solid var(--floppy-shadow);
+}
+
+.text {
+  position: absolute;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  align-content: flex-end;
+  right: calc(15% + 22.5%);
+  bottom: 15%;
+  font-size: calc(var(--floppy-size) * 0.025);
+}
+
+.text svg {
+  width: 100%;
+  height: calc(var(--floppy-size) * 0.08);
+  margin-bottom: calc(var(--floppy-size) * 0.01);
+}
+
+.text svg text {
+  fill: var(--floppy-color);
+  font-size: 10px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+.labelSlot {
+  width: 80%;
+  height: 50%;
+  background: var(--floppy-color);
+  position: absolute;
+  bottom: 2.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top: var(--floppy-border) solid var(--floppy-shadow);
+  border-right: var(--floppy-border) solid var(--floppy-highlight);
+  border-bottom: var(--floppy-border) solid var(--floppy-highlight);
+  border-left: var(--floppy-border) solid var(--floppy-shadow);
+  border-top-left-radius: calc(var(--floppy-size) * 0.0133);
+  border-top-right-radius: calc(var(--floppy-size) * 0.0133);
+  border-bottom-left-radius: calc(var(--floppy-size) * 0.0067);
+  border-bottom-right-radius: calc(var(--floppy-size) * 0.0067);
+}
+
+.label {
+  width: 98%;
+  height: 98%;
+  background: var(--label-color);
+  position: absolute;
+  bottom: 1%;
+  left: 50.2%;
+  transform: translateX(-50%) rotate(-0.5deg);
+  border-top-left-radius: calc(var(--floppy-size) * 0.0133);
+  border-top-right-radius: calc(var(--floppy-size) * 0.0133);
+  border-bottom-left-radius: calc(var(--floppy-size) * 0.0044);
+  border-bottom-right-radius: calc(var(--floppy-size) * 0.0044);
+}
+
+.lines {
+  width: 100%;
+  height: 95%;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  gap: calc(var(--floppy-size) * 0.015);
+  padding: 5% 5%;
+  box-sizing: border-box;
+}
+
+.lineText {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: calc(var(--floppy-size) * 0.11);
+  font-weight: 500;
+  color: var(--label-text-color);
+  text-align: left;
+  width: 90%;
+  margin: 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+
+/* Compact variant for list views */
+.compact .labelSlot {
+  height: 45%;
+}
+
+.compact .slideTrack {
+  height: 30%;
+}
+
+.compact .lineText {
+  font-size: calc(var(--floppy-size) * 0.065);
+  font-weight: 600;
+}
+

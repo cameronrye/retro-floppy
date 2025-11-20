@@ -1,0 +1,26 @@
+declare const styles: {
+  readonly silhouette: string;
+  readonly selected: string;
+  readonly disabled: string;
+  readonly static: string;
+  readonly compact: string;
+  readonly notch: string;
+  readonly notchBorder: string;
+  readonly decals: string;
+  readonly arrow: string;
+  readonly locks: string;
+  readonly slideTrack: string;
+  readonly slideBack: string;
+  readonly drop: string;
+  readonly slide: string;
+  readonly cutout: string;
+  readonly text: string;
+  readonly labelSlot: string;
+  readonly label: string;
+  readonly lines: string;
+  readonly lineText: string;
+  readonly redLine: string;
+};
+
+export default styles;
+
