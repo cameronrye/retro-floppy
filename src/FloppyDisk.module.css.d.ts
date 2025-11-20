@@ -19,6 +19,7 @@ declare const styles: {
   readonly label: string;
   readonly lines: string;
   readonly lineText: string;
+  readonly yearText: string;
   readonly redLine: string;
 };
 

@@ -188,7 +188,7 @@ function App() {
               {sampleDisks.map(disk => (
                 <FloppyDisk
                   key={disk.id}
-                  size="small"
+                  size="large"
                   label={disk.label}
                   diskType={disk.diskType}
                   onClick={() => handleDiskClick(disk.id)}
