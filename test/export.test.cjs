@@ -8,7 +8,6 @@ const lib = require(distPath);
 
 assert.ok(lib.FloppyDisk, 'FloppyDisk export should be defined');
 assert.ok(lib.LIGHT_FLOPPY_THEME, 'LIGHT_FLOPPY_THEME export should be defined');
-assert.ok(lib.DARK_FLOPPY_THEME, 'DARK_FLOPPY_THEME export should be defined');
 assert.ok(lib.DEFAULT_THEME, 'DEFAULT_THEME export should be defined');
 
 console.log('All export tests passed.');

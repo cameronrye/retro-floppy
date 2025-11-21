@@ -31,12 +31,12 @@ Open your browser to `http://localhost:5173` to see the demo.
 ### Option 1: Install from NPM (After Publishing)
 
 ```bash
-npm install @floppy/disk-component
+npm install retro-floppy
 ```
 
 ```tsx
-import { FloppyDisk } from '@floppy/disk-component';
-import '@floppy/disk-component/dist/floppydisk.css';
+import { FloppyDisk } from 'retro-floppy';
+import 'retro-floppy/dist/retro-floppy.css';
 
 function MyApp() {
   return (
@@ -82,7 +82,7 @@ const apps = [
 ];
 
 <div className="grid">
-  {apps.map(app => (
+  {apps.map((app) => (
     <FloppyDisk
       key={app.id}
       size="small"
@@ -93,7 +93,7 @@ const apps = [
       onClick={() => selectApp(app.id)}
     />
   ))}
-</div>
+</div>;
 ```
 
 ### 2. File Manager
@@ -102,7 +102,7 @@ Use tiny variant for compact file lists:
 
 ```tsx
 <div className="file-list">
-  {files.map(file => (
+  {files.map((file) => (
     <div className="file-row">
       <FloppyDisk size="tiny" variant="compact" />
       <span>{file.name}</span>
@@ -149,11 +149,11 @@ Full interactivity with all handlers:
 ```tsx
 <FloppyDisk
   theme={{
-    diskColor: '#1a1a1a',      // Dark gray disk
-    slideColor: '#ffd700',      // Gold slide
+    diskColor: '#1a1a1a', // Dark gray disk
+    slideColor: '#ffd700', // Gold slide
     backgroundColor: '#f5f5f5', // Light background
-    labelColor: '#ffffcc',      // Cream label
-    labelTextColor: '#333',     // Dark text
+    labelColor: '#ffffcc', // Cream label
+    labelTextColor: '#333', // Dark text
   }}
 />
 ```
@@ -190,16 +190,19 @@ Use the structured `label` prop to describe the contents:
 ### For Large Lists (100+ items)
 
 1. **Use React.memo**:
+
 ```tsx
 const MemoizedDisk = memo(FloppyDisk);
 ```
 
 2. **Disable animations**:
+
 ```tsx
 <FloppyDisk variant="static" />
 ```
 
 3. **Use virtualization** (react-window):
+
 ```tsx
 import { FixedSizeGrid } from 'react-window';
 
@@ -214,7 +217,7 @@ import { FixedSizeGrid } from 'react-window';
       <FloppyDisk {...disks[rowIndex * 5 + columnIndex]} />
     </div>
   )}
-</FixedSizeGrid>
+</FixedSizeGrid>;
 ```
 
 ## Troubleshooting
@@ -224,7 +227,10 @@ import { FixedSizeGrid } from 'react-window';
 Make sure to include the Google Font in your HTML:
 
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 ### Animations not working
@@ -245,4 +251,3 @@ The component uses fixed pixel sizes. Wrap in a container with responsive width 
 ---
 
 Happy coding! 💾
-

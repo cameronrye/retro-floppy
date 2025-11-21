@@ -25,7 +25,7 @@ export default {
     typescript({ tsconfig: './tsconfig.json' }),
     postcss({
       modules: true,
-      extract: 'floppydisk.css',
+      extract: 'retro-floppy.css',
       inject: false,
     }),
   ],

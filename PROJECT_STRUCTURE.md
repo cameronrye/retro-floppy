@@ -24,7 +24,7 @@ floppy/
 │   ├── index.cjs                # CommonJS bundle
 │   ├── index.esm.js             # ES Module bundle
 │   ├── index.d.ts               # TypeScript definitions
-│   ├── floppydisk.css           # Extracted component styles
+│   ├── retro-floppy.css         # Extracted component styles
 │   └── *.map                    # Source maps
 │
 ├── package.json                  # Package configuration
@@ -42,24 +42,28 @@ floppy/
 ### Component Files
 
 **`src/FloppyDisk.tsx`**
+
 - Main React component implementation
 - Handles props, state, and rendering
 - Includes color manipulation utilities
 - ~140 lines
 
 **`src/FloppyDisk.module.css`**
+
 - CSS Module with scoped styles
 - Uses CSS custom properties for dynamic sizing
 - Responsive and flexible
 - ~310 lines
 
 **`src/types.ts`**
+
 - TypeScript interfaces and types
 - Size variants, theme definitions
 - Default values and constants
 - ~70 lines
 
 **`src/index.ts`**
+
 - Public API exports
 - Re-exports component and types
 - Entry point for consumers
@@ -67,17 +71,20 @@ floppy/
 ### Configuration Files
 
 **`package.json`**
+
 - Package metadata
 - Dependencies and peer dependencies
 - Build scripts
 - NPM publishing configuration
 
 **`tsconfig.json`**
+
 - TypeScript compiler options
 - Strict mode enabled
 - ES2015 target for broad compatibility
 
 **`rollup.config.js`**
+
 - Bundler configuration
 - Creates both CJS and ESM outputs
 - Handles TypeScript and CSS Modules
@@ -86,12 +93,14 @@ floppy/
 ### Example Application
 
 **`example/App.tsx`**
+
 - Comprehensive demo application
 - Shows all size variants
 - Grid and list view examples
 - Interactive features demonstration
 
 **`example/App.css`**
+
 - Demo styling
 - Responsive layout
 - Grid and list view styles
@@ -120,12 +129,14 @@ dist/
 ### What Gets Published
 
 When you run `npm publish`, only these are included:
+
 - `dist/` folder (built files)
 - `README.md`
 - `package.json`
 - `LICENSE` (if present)
 
 Excluded via `.npmignore`:
+
 - `src/` (source code)
 - `example/` (demo app)
 - Configuration files
@@ -136,7 +147,7 @@ Excluded via `.npmignore`:
 ### NPM Package Structure
 
 ```
-@floppy/disk-component/
+retro-floppy/
 ├── dist/
 │   ├── index.js
 │   ├── index.esm.js
@@ -149,13 +160,13 @@ Excluded via `.npmignore`:
 
 ```tsx
 // Main component
-import { FloppyDisk } from '@floppy/disk-component';
+import { FloppyDisk } from 'retro-floppy';
 
 // Types
-import type { FloppyDiskProps, FloppyTheme } from '@floppy/disk-component';
+import type { FloppyDiskProps, FloppyTheme } from 'retro-floppy';
 
 // Constants
-import { SIZE_MAP, DEFAULT_THEME } from '@floppy/disk-component';
+import { SIZE_MAP, DEFAULT_THEME } from 'retro-floppy';
 ```
 
 ## 🔄 Development Commands
@@ -181,8 +192,8 @@ npm publish
 
 ### For Consumers
 
-1. **Install**: `npm install @floppy/disk-component`
-2. **Import**: `import { FloppyDisk } from '@floppy/disk-component'`
+1. **Install**: `npm install retro-floppy`
+2. **Import**: `import { FloppyDisk } from 'retro-floppy'`
 3. **Use**: `<FloppyDisk size="small" label={{ name: 'Hello' }} />`
 
 ### For Contributors
@@ -205,6 +216,6 @@ npm publish
 ---
 
 For more information, see:
+
 - [README.md](./README.md) - Main documentation
 - [USAGE_GUIDE.md](./USAGE_GUIDE.md) - Detailed usage examples
-

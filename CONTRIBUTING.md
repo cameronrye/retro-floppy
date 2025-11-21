@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in contributing to **floppydisk**!
+Thanks for your interest in contributing to **Retro Floppy**!
 
 ## Development
 
@@ -34,4 +34,3 @@ Thanks for your interest in contributing to **floppydisk**!
 ## Code of Conduct
 
 By participating in this project, you agree to abide by the [Code of Conduct](./CODE_OF_CONDUCT.md).
-
