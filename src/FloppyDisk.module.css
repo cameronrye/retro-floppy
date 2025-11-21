@@ -24,16 +24,20 @@
   );
 }
 
-.silhouette:hover {
+.silhouette:not(.static):hover {
   filter: brightness(1.05);
+  transform: scale(1.02);
 }
 
-.silhouette:active,
-.silhouette:focus {
+/* Preserve browser focus outline for keyboard users while removing default for mouse */
+.silhouette:focus-visible {
+  outline: 2px solid #4a9eff;
+  outline-offset: 3px;
+}
+
+.silhouette:focus:not(:focus-visible) {
   outline: none;
 }
-
-
 
 .silhouette.selected {
   box-shadow: 0 0 0 calc(var(--floppy-border) * 2) #4a9eff;
@@ -61,7 +65,7 @@
   right: 0;
   width: calc(var(--floppy-size) * 0.111);
   height: calc(var(--floppy-size) * 0.111);
-  background: linear-gradient(to bottom right, transparent 49%, var(--floppy-shadow) 49%, var(--floppy-shadow) 51%, transparent 51%);
+  background: linear-gradient(to bottom left, transparent 49%, var(--floppy-shadow) 49%, var(--floppy-shadow) 51%, transparent 51%);
   pointer-events: none;
   z-index: 2;
 }
@@ -159,11 +163,15 @@
   border-left: var(--floppy-border) solid var(--floppy-highlight);
   border-right: var(--floppy-border) solid var(--floppy-shadow);
   transition: right 0.3s ease-out;
+  cursor: grab;
 }
 
-.silhouette:not(.static):hover .slide {
+.slide:hover {
   right: 25%;
-  transition: right 0.3s ease-out;
+}
+
+.slide:active {
+  cursor: grabbing;
 }
 
 .cutout {

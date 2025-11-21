@@ -8,7 +8,7 @@ export default {
   input: 'src/index.ts',
   output: [
     {
-      file: 'dist/index.js',
+      file: 'dist/index.cjs',
       format: 'cjs',
       sourcemap: true,
     },
@@ -25,8 +25,8 @@ export default {
     typescript({ tsconfig: './tsconfig.json' }),
     postcss({
       modules: true,
-      extract: false,
-      inject: true,
+      extract: 'floppydisk.css',
+      inject: false,
     }),
   ],
 };

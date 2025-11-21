@@ -36,12 +36,16 @@ npm install @floppy/disk-component
 
 ```tsx
 import { FloppyDisk } from '@floppy/disk-component';
+import '@floppy/disk-component/dist/floppydisk.css';
 
 function MyApp() {
   return (
     <FloppyDisk
       size="small"
-      labelLines={['My App', 'Version 1.0']}
+      label={{
+        name: 'My App',
+        author: 'Version 1.0',
+      }}
     />
   );
 }
@@ -82,7 +86,10 @@ const apps = [
     <FloppyDisk
       key={app.id}
       size="small"
-      labelLines={[app.name, app.author]}
+      label={{
+        name: app.name,
+        author: app.author,
+      }}
       onClick={() => selectApp(app.id)}
     />
   ))}
@@ -111,12 +118,10 @@ Large, eye-catching disk for landing pages:
 ```tsx
 <FloppyDisk
   size="hero"
-  labelLines={[
-    'Welcome to',
-    'Retro Computing',
-    '',
-    'Experience the nostalgia'
-  ]}
+  label={{
+    name: 'Welcome to Retro Computing',
+    description: 'Experience the nostalgia',
+  }}
   variant="static"
 />
 ```
@@ -128,10 +133,12 @@ Full interactivity with all handlers:
 ```tsx
 <FloppyDisk
   size="large"
-  labelLines={['Click me!', 'Double-click to launch']}
+  label={{
+    name: 'Click me!',
+    description: 'Double-click to launch',
+  }}
   onClick={() => console.log('Selected')}
   onDoubleClick={() => console.log('Launched')}
-  onFlip={() => console.log('Flipped')}
 />
 ```
 
@@ -165,17 +172,16 @@ Full interactivity with all handlers:
 
 ### Label Content
 
-The label supports up to 5 lines. Use empty strings for spacing:
+Use the structured `label` prop to describe the contents:
 
 ```tsx
 <FloppyDisk
-  labelLines={[
-    'Second Reality',           // Line 1: Title
-    'Future Crew (1993)',       // Line 2: Author/Date
-    '',                         // Line 3: Blank for spacing
-    'Legendary 1993 demo',      // Line 4: Description
-    'by Future Crew'            // Line 5: More description
-  ]}
+  label={{
+    name: 'Second Reality',
+    author: 'Future Crew',
+    year: '1993',
+    description: 'Legendary 1993 demo',
+  }}
 />
 ```
 

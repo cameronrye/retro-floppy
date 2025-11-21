@@ -21,9 +21,10 @@ floppy/
 │   └── package.json             # Demo dependencies
 │
 ├── dist/                         # Build output (generated)
-│   ├── index.js                 # CommonJS bundle
+│   ├── index.cjs                # CommonJS bundle
 │   ├── index.esm.js             # ES Module bundle
 │   ├── index.d.ts               # TypeScript definitions
+│   ├── floppydisk.css           # Extracted component styles
 │   └── *.map                    # Source maps
 │
 ├── package.json                  # Package configuration
@@ -182,7 +183,7 @@ npm publish
 
 1. **Install**: `npm install @floppy/disk-component`
 2. **Import**: `import { FloppyDisk } from '@floppy/disk-component'`
-3. **Use**: `<FloppyDisk size="small" labelLines={['Hello']} />`
+3. **Use**: `<FloppyDisk size="small" label={{ name: 'Hello' }} />`
 
 ### For Contributors
 

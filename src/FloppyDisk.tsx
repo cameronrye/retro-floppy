@@ -1,4 +1,4 @@
-import React, { CSSProperties, useMemo, useRef, useEffect, useState } from 'react';
+import React, { CSSProperties, useRef, useEffect, useState } from 'react';
 import { FloppyDiskProps, SIZE_MAP, DEFAULT_THEME } from './types';
 import styles from './FloppyDisk.module.css';
 
@@ -13,7 +13,6 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = ({
   disabled = false,
   onClick,
   onDoubleClick,
-  onFlip,
   className = '',
   ariaLabel,
 }) => {
@@ -54,6 +53,21 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = ({
 
   const handleDoubleClick = () => {
     if (!disabled && onDoubleClick) onDoubleClick();
+  };
+
+  const handleKeyDown: React.KeyboardEventHandler<HTMLElement> = (event) => {
+    if (disabled) return;
+
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      if (onClick) onClick();
+    }
+
+    if (event.key === ' ') {
+      event.preventDefault();
+      // For this simple component we activate on keydown for Space.
+      if (onClick) onClick();
+    }
   };
 
   // Format label data into display lines
@@ -126,6 +140,7 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = ({
       style={cssVariables}
       onClick={handleClick}
       onDoubleClick={handleDoubleClick}
+      onKeyDown={handleKeyDown}
       tabIndex={disabled ? -1 : 0}
       role="button"
       aria-label={accessibleLabel}

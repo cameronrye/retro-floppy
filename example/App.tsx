@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FloppyDisk, FloppyLabel } from '../src';
+import { FloppyDisk, FloppyLabel, LIGHT_FLOPPY_THEME, DARK_FLOPPY_THEME } from '../src';
 import './App.css';
 
 interface DiskData {
@@ -84,8 +84,16 @@ const sampleDisks: DiskData[] = [
 ];
 
 function App() {
-  const [selectedDisk, setSelectedDisk] = useState<number | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  React.useEffect(() => {
+    if (isDarkTheme) {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.remove('dark-theme');
+    }
+  }, [isDarkTheme]);
 
   const handleDiskClick = (id: number) => {
     const disk = sampleDisks.find(d => d.id === id);
@@ -109,6 +117,12 @@ function App() {
           >
             List View
           </button>
+          <button
+            className={isDarkTheme ? 'active' : ''}
+            onClick={() => setIsDarkTheme(prev => !prev)}
+          >
+            {isDarkTheme ? 'Dark Theme' : 'Light Theme'}
+          </button>
         </div>
       </header>
 
@@ -128,6 +142,7 @@ function App() {
                   size: '1.44 MB',
                 }}
                 diskType="HD"
+                theme={isDarkTheme ? DARK_FLOPPY_THEME : LIGHT_FLOPPY_THEME}
               />
               <span>Tiny (60px)</span>
             </div>
@@ -143,6 +158,7 @@ function App() {
                   size: '1.44 MB',
                 }}
                 diskType="HD"
+                theme={isDarkTheme ? DARK_FLOPPY_THEME : LIGHT_FLOPPY_THEME}
               />
               <span>Small (120px)</span>
             </div>
@@ -158,6 +174,7 @@ function App() {
                   size: '1.44 MB',
                 }}
                 diskType="HD"
+                theme={isDarkTheme ? DARK_FLOPPY_THEME : LIGHT_FLOPPY_THEME}
               />
               <span>Medium (200px)</span>
             </div>
@@ -173,6 +190,7 @@ function App() {
                   size: '1.44 MB',
                 }}
                 diskType="HD"
+                theme={isDarkTheme ? DARK_FLOPPY_THEME : LIGHT_FLOPPY_THEME}
               />
               <span>Large (400px)</span>
             </div>
@@ -188,9 +206,10 @@ function App() {
               {sampleDisks.map(disk => (
                 <FloppyDisk
                   key={disk.id}
-                  size="large"
+                  size="medium"
                   label={disk.label}
                   diskType={disk.diskType}
+                  theme={isDarkTheme ? DARK_FLOPPY_THEME : LIGHT_FLOPPY_THEME}
                   onClick={() => handleDiskClick(disk.id)}
                 />
               ))}
@@ -208,6 +227,7 @@ function App() {
                     label={disk.label}
                     diskType={disk.diskType}
                     variant="compact"
+                    theme={isDarkTheme ? DARK_FLOPPY_THEME : LIGHT_FLOPPY_THEME}
                   />
                   <div className="list-info">
                     <strong>{disk.label.name}</strong>

@@ -63,9 +63,6 @@ export interface FloppyDiskProps {
   /** Double-click handler */
   onDoubleClick?: () => void;
 
-  /** Flip animation complete handler */
-  onFlip?: () => void;
-
   /** Additional CSS class name */
   className?: string;
 
@@ -81,11 +78,21 @@ export const SIZE_MAP: Record<Exclude<FloppySize, number>, number> = {
   hero: 600,
 };
 
-export const DEFAULT_THEME: Required<FloppyTheme> = {
+export const LIGHT_FLOPPY_THEME: Required<FloppyTheme> = {
   diskColor: '#2a2a2a',
   slideColor: '#c0c0c0',
   backgroundColor: '#ceb',
   labelColor: '#ffffff',
   labelTextColor: '#000000',
 };
+
+export const DARK_FLOPPY_THEME: Required<FloppyTheme> = {
+  diskColor: '#e5e5e5',
+  slideColor: '#9e9e9e',
+  backgroundColor: '#1b1b1b',
+  labelColor: '#262626',
+  labelTextColor: '#f5f5f5',
+};
+
+export const DEFAULT_THEME: Required<FloppyTheme> = LIGHT_FLOPPY_THEME;
 

@@ -6,8 +6,8 @@ A beautiful, interactive 3.5" floppy disk React component for retro-themed UIs. 
 
 ## ✨ Features
 
-- 🎨 **Highly Customizable** - Size variants, color themes, and label content
-- 🖱️ **Interactive** - Hover animations, click handlers, and flip effects
+- 🎨 **Highly Customizable** - Size variants, color themes, and structured label content
+- 🖱️ **Interactive** - Hover animations plus click and double-click handlers
 - 📦 **Flexible Sizing** - From tiny (60px) to hero (600px) or custom pixel values
 - ⚡ **Performant** - Optimized for rendering multiple instances in lists/grids
 - ♿ **Accessible** - ARIA labels and keyboard navigation support
@@ -28,17 +28,20 @@ pnpm add @floppy/disk-component
 
 ```tsx
 import { FloppyDisk } from '@floppy/disk-component';
+import '@floppy/disk-component/dist/floppydisk.css';
 
 function App() {
   return (
     <FloppyDisk
       size="medium"
-      labelLines={[
-        'Second Reality',
-        'Future Crew (1993)',
-        '',
-        'Legendary 1993 demo by Future Crew'
-      ]}
+      label={{
+        name: 'Second Reality',
+        author: 'Future Crew',
+        year: '1993',
+        description: 'Legendary 1993 demo by Future Crew',
+        type: 'ZIP',
+        size: '1.44 MB',
+      }}
       onClick={() => console.log('Disk clicked!')}
     />
   );
@@ -52,7 +55,10 @@ function App() {
 ```tsx
 <FloppyDisk
   size="small"
-  labelLines={['My Application', 'Version 1.0']}
+  label={{
+    name: 'My Application',
+    author: 'Version 1.0',
+  }}
   diskType="HD"
   capacity="1.44 MB"
 />
@@ -68,7 +74,7 @@ const applications = [
 ];
 
 function SoftwareLibrary() {
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<number | null>(null);
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '20px' }}>
@@ -76,7 +82,10 @@ function SoftwareLibrary() {
         <FloppyDisk
           key={app.id}
           size="small"
-          labelLines={[app.name, app.author]}
+          label={{
+            name: app.name,
+            author: app.author,
+          }}
           selected={selected === app.id}
           onClick={() => setSelected(app.id)}
           onDoubleClick={() => alert(`Launching ${app.name}`)}
@@ -92,10 +101,12 @@ function SoftwareLibrary() {
 ```tsx
 <FloppyDisk
   size="large"
-  labelLines={['Custom Theme']}
+  label={{
+    name: 'Custom Theme',
+  }}
   theme={{
     diskColor: '#1a1a1a',
-    slideColor: '#gold',
+    slideColor: '#ffd700',
     backgroundColor: '#f0f0f0',
     labelColor: '#ffffcc',
     labelTextColor: '#333333',
@@ -112,7 +123,7 @@ function SoftwareLibrary() {
       <FloppyDisk
         size="tiny"
         variant="compact"
-        labelLines={[file.name]}
+        label={{ name: file.name }}
       />
       <span>{file.name}</span>
       <span>{file.size}</span>
@@ -121,6 +132,30 @@ function SoftwareLibrary() {
 </div>
 ```
 
+## 🌓 Light & Dark Themes
+
+The disk respects theme colors, so it can sit comfortably in both light and dark UIs.
+Use the built-in presets or provide your own `theme`.
+
+```tsx
+import { FloppyDisk, LIGHT_FLOPPY_THEME, DARK_FLOPPY_THEME } from 'floppydisk';
+
+function ThemedExample({ isDark }: { isDark: boolean }) {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{ name: isDark ? 'Dark Mode' : 'Light Mode' }}
+      theme={isDark ? DARK_FLOPPY_THEME : LIGHT_FLOPPY_THEME}
+    />
+  );
+}
+```
+
+- `LIGHT_FLOPPY_THEME` – tuned for light backgrounds (default)
+- `DARK_FLOPPY_THEME` – tuned for dark backgrounds
+
+You can still override any color via the `theme` prop.
+
 ## 🎛️ API Reference
 
 ### Props
@@ -128,18 +163,17 @@ function SoftwareLibrary() {
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `size` | `'tiny' \| 'small' \| 'medium' \| 'large' \| 'hero' \| number` | `'medium'` | Size of the disk. Predefined or custom px value |
-| `labelLines` | `string[]` | `[]` | Array of text lines for the label (max 5 recommended) |
+| `label` | `FloppyLabel` | `undefined` | Structured label data for the disk (name, author, year, description, type, size) |
 | `diskType` | `'HD' \| 'DD'` | `'HD'` | High Density or Double Density |
-| `capacity` | `string` | `'1.44 MB'` | Storage capacity display |
+| `capacity` | `string` | `'1.44 MB'` | Storage capacity display (overrides `label.size` if provided) |
 | `theme` | `FloppyTheme` | Default theme | Color customization object |
 | `variant` | `'interactive' \| 'static' \| 'compact'` | `'interactive'` | Interaction mode |
 | `selected` | `boolean` | `false` | Whether the disk is selected |
 | `disabled` | `boolean` | `false` | Whether the disk is disabled |
 | `onClick` | `() => void` | - | Click handler |
 | `onDoubleClick` | `() => void` | - | Double-click handler |
-| `onFlip` | `() => void` | - | Flip animation complete handler |
 | `className` | `string` | `''` | Additional CSS class |
-| `ariaLabel` | `string` | Auto-generated | Accessible label |
+| `ariaLabel` | `string` | Auto-generated | Accessible label override |
 
 ### Size Variants
 
@@ -167,16 +201,19 @@ interface FloppyTheme {
 ## 🎨 Variants
 
 ### Interactive (Default)
+
 - Hover to slide out the metal shutter
-- Click/focus to flip the disk
-- Full animations enabled
+- Click to trigger the `onClick` handler
+- Double-click to trigger the `onDoubleClick` handler
 
 ### Static
-- No animations
+
+- No hover animations
 - Click handlers still work
 - Best for performance-critical lists
 
 ### Compact
+
 - Reduced label area
 - Smaller slide track
 - Optimized for tight spaces
@@ -211,12 +248,17 @@ const MemoizedFloppyDisk = memo(FloppyDisk);
 
 ```tsx
 <FloppyDisk
-  labelLines={['Important Document']}
+  label={{ name: 'Important Document' }}
   ariaLabel="Important Document floppy disk, double-click to open"
   onClick={handleSelect}
   onDoubleClick={handleOpen}
 />
 ```
+
+- The entire floppy is a focusable `figure` with `role="button"`.
+- `ariaLabel` controls the screen reader label; if omitted, it falls back to the `label` text.
+- Keyboard users can press **Enter** or **Space** to trigger `onClick` when `variant !== 'static'` and `disabled` is `false`.
+- A visible focus outline appears when navigating with the keyboard.
 
 ## 🛠️ Development
 
@@ -242,27 +284,25 @@ npm run build
 ```
 
 This creates:
-- `dist/index.js` - CommonJS bundle
+
+- `dist/index.cjs` - CommonJS bundle
 - `dist/index.esm.js` - ES Module bundle
 - `dist/index.d.ts` - TypeScript definitions
+- `dist/floppydisk.css` - Extracted CSS styles for the component (import this in your app)
 
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for development instructions and guidelines and [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) for expected behavior.
+
 ## 📄 License
 
-MIT © [Your Name]
+This project is licensed under the MIT License – see the [LICENSE](./LICENSE) file for details.
 
 ## 🙏 Credits
 
 Inspired by the iconic 3.5" floppy disk that stored our precious data in the 80s and 90s.
-
-## 🔗 Links
-
-- [GitHub Repository](https://github.com/yourusername/floppy-disk-component)
-- [NPM Package](https://www.npmjs.com/package/@floppy/disk-component)
-- [Live Demo](https://floppy-disk-component.demo)
 
 ---
 
