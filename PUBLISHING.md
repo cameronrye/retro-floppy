@@ -97,7 +97,7 @@ If this is your first time publishing this package:
    ```
 
 5. **Create GitHub release**
-   - Go to https://github.com/cameronrye/floppydisk/releases/new
+   - Go to https://github.com/cameronrye/retro-floppy/releases/new
    - Select the version tag
    - Copy changelog entry for this version
    - Publish release

@@ -1,0 +1,141 @@
+/**
+ * Landing page styles for Retro Floppy
+ */
+
+.heroBanner {
+  padding: 6rem 2rem;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+}
+
+[data-theme='dark'] .heroBanner {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.heroContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heroText {
+  text-align: left;
+}
+
+.heroDemo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+}
+
+.badges img {
+  height: 20px;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.installCommand {
+  margin-top: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: rgba(99, 102, 241, 0.1);
+  border: 2px solid var(--ifm-color-primary);
+  border-radius: 0.5rem;
+  display: inline-block;
+}
+
+.installCommand code {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+}
+
+.clickMessage {
+  position: absolute;
+  bottom: -3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ifm-color-primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  animation: fadeInOut 2s ease-in-out;
+  white-space: nowrap;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+/* Responsive design */
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 3rem 1.5rem;
+  }
+
+  .heroContent {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .heroText {
+    text-align: center;
+  }
+
+  .buttons {
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .badges {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .heroBanner {
+    padding: 2rem 1rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .buttons .button {
+    width: 100%;
+  }
+}

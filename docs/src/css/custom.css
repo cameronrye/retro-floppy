@@ -1,0 +1,166 @@
+/**
+ * Retro Floppy Documentation - Custom Styles
+ * Retro-themed styling to match the floppy disk component aesthetic
+ */
+
+/* Import retro fonts */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+/* Light mode - Retro color palette */
+:root {
+  /* Primary colors - Retro blue/purple theme */
+  --ifm-color-primary: #6366f1;
+  --ifm-color-primary-dark: #4f46e5;
+  --ifm-color-primary-darker: #4338ca;
+  --ifm-color-primary-darkest: #3730a3;
+  --ifm-color-primary-light: #818cf8;
+  --ifm-color-primary-lighter: #a5b4fc;
+  --ifm-color-primary-lightest: #c7d2fe;
+
+  /* Retro accent colors */
+  --retro-cyan: #06b6d4;
+  --retro-magenta: #ec4899;
+  --retro-yellow: #fbbf24;
+  --retro-green: #10b981;
+
+  /* Typography */
+  --ifm-font-family-base: 'IBM Plex Mono', 'Courier New', monospace;
+  --ifm-heading-font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  --ifm-code-font-size: 95%;
+  --ifm-font-size-base: 16px;
+
+  /* Spacing and layout */
+  --ifm-spacing-horizontal: 1.5rem;
+  --ifm-navbar-height: 4rem;
+
+  /* Code blocks */
+  --docusaurus-highlighted-code-line-bg: rgba(99, 102, 241, 0.1);
+
+  /* Borders and shadows - retro style */
+  --ifm-global-border-width: 2px;
+  --ifm-global-radius: 0.5rem;
+  --ifm-button-border-radius: 0.375rem;
+}
+
+/* Dark mode - Retro cyberpunk aesthetic */
+[data-theme='dark'] {
+  --ifm-color-primary: #818cf8;
+  --ifm-color-primary-dark: #6366f1;
+  --ifm-color-primary-darker: #4f46e5;
+  --ifm-color-primary-darkest: #4338ca;
+  --ifm-color-primary-light: #a5b4fc;
+  --ifm-color-primary-lighter: #c7d2fe;
+  --ifm-color-primary-lightest: #e0e7ff;
+
+  --ifm-background-color: #0f172a;
+  --ifm-background-surface-color: #1e293b;
+
+  --docusaurus-highlighted-code-line-bg: rgba(129, 140, 248, 0.15);
+}
+
+/* Retro heading styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Navbar retro styling */
+.navbar {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid var(--ifm-color-primary);
+}
+
+.navbar__title {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Hero section styling */
+.hero {
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary-lightest) 0%,
+    var(--ifm-color-primary-light) 100%
+  );
+  border-bottom: 3px solid var(--ifm-color-primary);
+}
+
+[data-theme='dark'] .hero {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+/* Button retro styling */
+.button {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* Code block retro styling */
+.prism-code {
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+}
+
+/* Card styling for feature sections */
+.card {
+  border: 2px solid var(--ifm-color-emphasis-200);
+  border-radius: var(--ifm-global-radius);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+  transform: translateY(-4px);
+}
+
+/* Footer retro styling */
+.footer {
+  border-top: 3px solid var(--ifm-color-primary);
+}
+
+/* Sidebar retro styling */
+.menu__link {
+  border-radius: 0.375rem;
+  font-weight: 500;
+}
+
+.menu__link--active {
+  background: linear-gradient(
+    90deg,
+    var(--ifm-color-primary-lightest),
+    transparent
+  );
+  border-left: 3px solid var(--ifm-color-primary);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ifm-background-surface-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ifm-color-primary);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ifm-color-primary-dark);
+}

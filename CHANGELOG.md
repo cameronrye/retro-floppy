@@ -81,5 +81,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Missing development dependencies (testing and linting tools)
 - Linting errors and code formatting issues
 
-[Unreleased]: https://github.com/cameronrye/floppydisk/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/cameronrye/floppydisk/releases/tag/v1.0.0
+[Unreleased]: https://github.com/cameronrye/retro-floppy/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/cameronrye/retro-floppy/releases/tag/v1.0.0

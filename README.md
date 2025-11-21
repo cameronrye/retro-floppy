@@ -1,26 +1,26 @@
-# 💾 Retro Floppy
+# Retro Floppy
 
 [![npm version](https://img.shields.io/npm/v/retro-floppy.svg?style=flat-square)](https://www.npmjs.com/package/retro-floppy)
 [![npm downloads](https://img.shields.io/npm/dm/retro-floppy.svg?style=flat-square)](https://www.npmjs.com/package/retro-floppy)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/retro-floppy?style=flat-square)](https://bundlephobia.com/package/retro-floppy)
-[![license](https://img.shields.io/npm/l/retro-floppy.svg?style=flat-square)](https://github.com/cameronrye/floppydisk/blob/main/LICENSE)
-[![CI](https://img.shields.io/github/actions/workflow/status/cameronrye/floppydisk/ci.yml?branch=main&style=flat-square)](https://github.com/cameronrye/floppydisk/actions)
+[![license](https://img.shields.io/npm/l/retro-floppy.svg?style=flat-square)](https://github.com/cameronrye/retro-floppy/blob/main/LICENSE)
+[![CI](https://img.shields.io/github/actions/workflow/status/cameronrye/retro-floppy/ci.yml?branch=main&style=flat-square)](https://github.com/cameronrye/retro-floppy/actions)
 
 A beautiful, interactive 3.5" floppy disk React component for retro-themed UIs. Perfect for file managers, software libraries, game launchers, and nostalgic interfaces.
 
 ![Floppy Disk Component](https://via.placeholder.com/800x400?text=Floppy+Disk+Component+Demo)
 
-## ✨ Features
+## Features
 
-- 🎨 **Highly Customizable** - Size variants, color themes, and structured label content
-- 🖱️ **Interactive** - Hover animations plus click and double-click handlers
-- 📦 **Flexible Sizing** - From tiny (60px) to hero (600px) or custom pixel values
-- ⚡ **Performant** - Optimized for rendering multiple instances in lists/grids
-- ♿ **Accessible** - ARIA labels and keyboard navigation support
-- 🎯 **TypeScript** - Full type definitions included
-- 🔧 **Zero Dependencies** - Only requires React
+- **Highly Customizable** - Size variants, color themes, and structured label content
+- **Interactive** - Hover animations plus click and double-click handlers
+- **Flexible Sizing** - From tiny (60px) to hero (600px) or custom pixel values
+- **Performant** - Optimized for rendering multiple instances in lists/grids
+- **Accessible** - ARIA labels and keyboard navigation support
+- **TypeScript** - Full type definitions included
+- **Zero Dependencies** - Only requires React
 
-## 📦 Installation
+## Installation
 
 ```bash
 npm install retro-floppy
@@ -30,7 +30,7 @@ yarn add retro-floppy
 pnpm add retro-floppy
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ```tsx
 import { FloppyDisk } from 'retro-floppy';
@@ -54,7 +54,7 @@ function App() {
 }
 ```
 
-## 📖 Usage Examples
+## Usage Examples
 
 ### Basic Usage
 
@@ -143,12 +143,12 @@ function SoftwareLibrary() {
 </div>
 ```
 
-## 🎨 Theming
+## Theming
 
 The disk uses a default theme that works well in both light and dark UIs.
 You can customize colors via the `theme` prop to match your design.
 
-## 🎨 Theme Showcase
+## Theme Showcase
 
 The component includes several built-in theme presets for different aesthetics:
 
@@ -254,7 +254,7 @@ When using gradients, you can customize the generation:
 />
 ```
 
-## 🎛️ API Reference
+## API Reference
 
 ### Props
 
@@ -326,7 +326,7 @@ interface AnimationConfig {
 }
 ```
 
-## 🎨 Variants
+## Variants
 
 ### Interactive (Default)
 
@@ -346,7 +346,7 @@ interface AnimationConfig {
 - Smaller slide track
 - Optimized for tight spaces
 
-## 🎨 Advanced Features
+## Advanced Features
 
 ### Loading and Error States
 
@@ -371,6 +371,12 @@ interface AnimationConfig {
 <FloppyDisk label={{ name: "Locked" }}>
   <div style={{ fontSize: '48px' }}>🔒</div>
 </FloppyDisk>
+```
+
+**Note:** The lock emoji above is just an example. For production use, consider using an icon library or SVG instead.
+
+```tsx
+
 ```
 
 ### Event Callbacks
@@ -443,7 +449,7 @@ You can customize the appearance using CSS custom properties:
 --label-text-shadow        /* Label text shadow */
 ```
 
-## 🎯 Best Practices
+## Best Practices
 
 ### Performance with Multiple Disks
 
@@ -485,7 +491,7 @@ const MemoizedFloppyDisk = memo(FloppyDisk);
 - Keyboard users can press **Enter** or **Space** to trigger `onClick` when `variant !== 'static'` and `disabled` is `false`.
 - A visible focus outline appears when navigating with the keyboard.
 
-## 🛠️ Development
+## Development
 
 ### Running the Example
 
@@ -515,20 +521,20 @@ This creates:
 - `dist/index.d.ts` - TypeScript definitions
 - `dist/retro-floppy.css` - Extracted CSS styles for the component (import this in your app)
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for development instructions and guidelines and [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) for expected behavior.
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License – see the [LICENSE](./LICENSE) file for details.
 
-## 🙏 Credits
+## Credits
 
 Inspired by the iconic 3.5" floppy disk that stored our precious data in the 80s and 90s.
 
 ---
 
-Made with 💾 and nostalgia
+Made with ❤️ by [Cameron Rye](https://rye.dev)

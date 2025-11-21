@@ -1,0 +1,201 @@
+---
+sidebar_position: 4
+---
+
+# Size Variants
+
+Retro Floppy supports 5 predefined sizes and custom pixel values.
+
+## Predefined Sizes
+
+### Tiny (60px)
+
+Perfect for compact lists and small UI elements:
+
+```jsx live
+function TinyExample() {
+  return (
+    <FloppyDisk
+      size="tiny"
+      label={{ name: 'Tiny', author: '60px' }}
+    />
+  );
+}
+```
+
+### Small (120px)
+
+Great for file lists and compact grids:
+
+```jsx live
+function SmallExample() {
+  return (
+    <FloppyDisk
+      size="small"
+      label={{ name: 'Small', author: '120px' }}
+    />
+  );
+}
+```
+
+### Medium (200px)
+
+Default size, ideal for most use cases:
+
+```jsx live
+function MediumExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{ name: 'Medium', author: '200px' }}
+    />
+  );
+}
+```
+
+### Large (400px)
+
+Prominent display for featured content:
+
+```jsx live
+function LargeExample() {
+  return (
+    <FloppyDisk
+      size="large"
+      label={{ name: 'Large', author: '400px' }}
+    />
+  );
+}
+```
+
+### Hero (600px)
+
+Maximum impact for hero sections:
+
+```jsx live
+function HeroExample() {
+  return (
+    <FloppyDisk
+      size="hero"
+      label={{
+        name: 'Hero Size',
+        author: '600px',
+        year: '2024',
+      }}
+    />
+  );
+}
+```
+
+## Size Comparison
+
+See all sizes side by side:
+
+```jsx live
+function SizeComparisonExample() {
+  const sizes = ['tiny', 'small', 'medium', 'large'];
+
+  return (
+    <div style={{ display: 'flex', gap: '2rem', alignItems: 'flex-end', flexWrap: 'wrap' }}>
+      {sizes.map(size => (
+        <FloppyDisk
+          key={size}
+          size={size}
+          label={{ name: size, author: 'Size' }}
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+## Custom Size
+
+Use any pixel value between 10 and 1000:
+
+```jsx live
+function CustomSizeExample() {
+  return (
+    <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-end', flexWrap: 'wrap' }}>
+      <FloppyDisk size={80} label={{ name: '80px' }} />
+      <FloppyDisk size={150} label={{ name: '150px' }} />
+      <FloppyDisk size={250} label={{ name: '250px' }} />
+    </div>
+  );
+}
+```
+
+## Responsive Sizing
+
+Adjust size based on screen width:
+
+```tsx
+function ResponsiveDisk() {
+  const [size, setSize] = React.useState('medium');
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setSize('small');
+      } else if (window.innerWidth < 1024) {
+        setSize('medium');
+      } else {
+        setSize('large');
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return <FloppyDisk size={size} label={{ name: 'Responsive' }} />;
+}
+```
+
+## Grid Layout
+
+Create responsive grids with different sizes:
+
+```jsx live
+function GridLayoutExample() {
+  const items = Array.from({ length: 6 }, (_, i) => ({
+    id: i + 1,
+    name: `File ${i + 1}`,
+  }));
+
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))',
+      gap: '1rem',
+    }}>
+      {items.map(item => (
+        <FloppyDisk
+          key={item.id}
+          size="small"
+          label={{ name: item.name }}
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+## Size Guidelines
+
+| Size | Pixels | Best For |
+|------|--------|----------|
+| `tiny` | 60px | Compact lists, badges, icons |
+| `small` | 120px | File lists, compact grids |
+| `medium` | 200px | Default, general use |
+| `large` | 400px | Featured content, galleries |
+| `hero` | 600px | Hero sections, landing pages |
+| Custom | 10-1000px | Specific design needs |
+
+## Next Steps
+
+- **[States](/docs/examples/states)** - Loading, error, and disabled states
+- **[Interactions](/docs/examples/interactions)** - Click and hover events
+- **[API Reference](/docs/api/props)** - Complete props documentation
+

@@ -1,0 +1,68 @@
+---
+sidebar_position: 8
+---
+
+# Advanced Examples
+
+Complex use cases and patterns.
+
+## File Manager
+
+```jsx live
+function FileManagerExample() {
+  const [files, setFiles] = React.useState([
+    { id: 1, name: 'Photos', size: '1.44 MB', selected: false },
+    { id: 2, name: 'Documents', size: '880 KB', selected: false },
+    { id: 3, name: 'Music', size: '1.44 MB', selected: false },
+    { id: 4, name: 'Videos', size: '720 KB', selected: false },
+  ]);
+
+  const toggleSelect = (id) => {
+    setFiles(files.map(f => 
+      f.id === id ? { ...f, selected: !f.selected } : f
+    ));
+  };
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+      {files.map(file => (
+        <FloppyDisk
+          key={file.id}
+          size="small"
+          label={{ name: file.name, size: file.size }}
+          selected={file.selected}
+          onClick={() => toggleSelect(file.id)}
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+## Animated Grid
+
+```jsx live
+function AnimatedGridExample() {
+  const items = Array.from({ length: 6 }, (_, i) => ({
+    id: i + 1,
+    name: `Disk ${i + 1}`,
+  }));
+
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, 1fr)',
+      gap: '1rem',
+    }}>
+      {items.map(item => (
+        <FloppyDisk
+          key={item.id}
+          size="tiny"
+          label={{ name: item.name }}
+          theme={{ enableGradient: true }}
+        />
+      ))}
+    </div>
+  );
+}
+```

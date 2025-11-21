@@ -250,4 +250,4 @@ The component uses fixed pixel sizes. Wrap in a container with responsive width 
 
 ---
 
-Happy coding! 💾
+Happy coding!

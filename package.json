@@ -30,7 +30,12 @@
     "size": "size-limit",
     "prepublishOnly": "npm run build && npm run lint && npm run type-check && npm test",
     "prepare": "husky",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "docs:install": "cd docs && npm install",
+    "docs:dev": "cd docs && npm start",
+    "docs:build": "npm run build && cd docs && npm run build",
+    "docs:serve": "cd docs && npm run serve",
+    "docs:deploy": "cd docs && npm run deploy"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -63,12 +68,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cameronrye/floppydisk.git"
+    "url": "git+https://github.com/cameronrye/retro-floppy.git"
   },
   "bugs": {
-    "url": "https://github.com/cameronrye/floppydisk/issues"
+    "url": "https://github.com/cameronrye/retro-floppy/issues"
   },
-  "homepage": "https://github.com/cameronrye/floppydisk#readme",
+  "homepage": "https://cameronrye.github.io/retro-floppy",
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"

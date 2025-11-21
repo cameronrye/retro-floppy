@@ -1,0 +1,78 @@
+---
+sidebar_position: 6
+---
+
+# Interactions
+
+Handle click, double-click, hover, and keyboard events.
+
+## Click Events
+
+```jsx live
+function ClickExample() {
+  const [clicks, setClicks] = React.useState(0);
+
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{ name: 'Click Me', author: `Clicks: ${clicks}` }}
+      onClick={() => setClicks(clicks + 1)}
+    />
+  );
+}
+```
+
+## Double Click Events
+
+```jsx live
+function DoubleClickExample() {
+  const [doubleClicks, setDoubleClicks] = React.useState(0);
+
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{ name: 'Double Click', author: `Count: ${doubleClicks}` }}
+      onDoubleClick={() => setDoubleClicks(doubleClicks + 1)}
+    />
+  );
+}
+```
+
+## Hover Events
+
+```jsx live
+function HoverExample() {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: isHovered ? 'Hovering!' : 'Hover Me',
+        author: 'Interactive',
+      }}
+      onHover={(hovering) => setIsHovered(hovering)}
+    />
+  );
+}
+```
+
+## Focus Events
+
+```jsx live
+function FocusExample() {
+  const [isFocused, setIsFocused] = React.useState(false);
+
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: isFocused ? 'Focused' : 'Click or Tab',
+        author: 'Keyboard Nav',
+      }}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
+    />
+  );
+}
+```

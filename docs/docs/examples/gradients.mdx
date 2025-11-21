@@ -1,0 +1,196 @@
+---
+sidebar_position: 3
+---
+
+# Dynamic Gradients
+
+Add beautiful, deterministic gradient backgrounds to your floppy disk labels.
+
+## Enable Gradients
+
+Enable gradient backgrounds with a single prop:
+
+```jsx live
+function BasicGradientExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Gradient Disk',
+        author: 'Beautiful',
+      }}
+      theme={{
+        enableGradient: true,
+      }}
+    />
+  );
+}
+```
+
+## Gradient Types
+
+### Linear Gradient
+
+```jsx live
+function LinearGradientExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Linear Gradient',
+        author: 'Smooth Flow',
+      }}
+      theme={{
+        enableGradient: true,
+        gradientType: 'linear',
+      }}
+    />
+  );
+}
+```
+
+### Radial Gradient
+
+```jsx live
+function RadialGradientExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Radial Gradient',
+        author: 'Center Focus',
+      }}
+      theme={{
+        enableGradient: true,
+        gradientType: 'radial',
+      }}
+    />
+  );
+}
+```
+
+### Conic Gradient
+
+```jsx live
+function ConicGradientExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Conic Gradient',
+        author: 'Circular',
+      }}
+      theme={{
+        enableGradient: true,
+        gradientType: 'conic',
+      }}
+    />
+  );
+}
+```
+
+### Auto (Random)
+
+Let the component choose a random gradient type:
+
+```jsx live
+function AutoGradientExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Auto Gradient',
+        author: 'Surprise Me',
+      }}
+      theme={{
+        enableGradient: true,
+        gradientType: 'auto',
+      }}
+    />
+  );
+}
+```
+
+## Deterministic Gradients
+
+Gradients are generated deterministically based on the disk's name. The same name always produces the same gradient:
+
+```jsx live
+function DeterministicExample() {
+  return (
+    <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+      <FloppyDisk
+        size="small"
+        label={{ name: 'Same Name', author: 'Disk 1' }}
+        theme={{ enableGradient: true }}
+      />
+      <FloppyDisk
+        size="small"
+        label={{ name: 'Same Name', author: 'Disk 2' }}
+        theme={{ enableGradient: true }}
+      />
+      <FloppyDisk
+        size="small"
+        label={{ name: 'Different', author: 'Disk 3' }}
+        theme={{ enableGradient: true }}
+      />
+    </div>
+  );
+}
+```
+
+## Gradient Showcase
+
+See different gradient types side by side:
+
+```jsx live
+function GradientShowcaseExample() {
+  const types = ['linear', 'radial', 'conic'];
+  const names = ['Cybernetic Dreams', 'Quantum Flux', 'Stellar Voyage'];
+
+  return (
+    <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+      {types.map((type, i) => (
+        <div key={type} style={{ textAlign: 'center' }}>
+          <FloppyDisk
+            size="medium"
+            label={{
+              name: names[i],
+              author: `${type} gradient`,
+            }}
+            theme={{
+              enableGradient: true,
+              gradientType: type,
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Custom Gradient Options
+
+Advanced gradient customization (coming soon):
+
+```tsx
+<FloppyDisk
+  label={{ name: 'Custom' }}
+  theme={{
+    enableGradient: true,
+    gradientOptions: {
+      seed: 12345,
+      colors: ['#ff6b6b', '#4ecdc4', '#45b7d1'],
+      angle: 45,
+    },
+  }}
+/>
+```
+
+## Next Steps
+
+- **[Sizes](/docs/examples/sizes)** - Size variants
+- **[States](/docs/examples/states)** - Loading and error states
+- **[API Reference](/docs/api/themes)** - Complete theme API
+
