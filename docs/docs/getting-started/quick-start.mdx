@@ -1,0 +1,168 @@
+---
+sidebar_position: 2
+---
+
+# Quick Start
+
+Get your first Retro Floppy component up and running in 2 minutes.
+
+## Step 1: Install
+
+```bash
+npm install retro-floppy
+```
+
+## Step 2: Import
+
+Import the component and its CSS in your React file:
+
+```tsx
+import { FloppyDisk } from 'retro-floppy';
+import 'retro-floppy/dist/retro-floppy.css';
+```
+
+## Step 3: Use
+
+Add the component to your JSX:
+
+```tsx
+function App() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'My First Disk',
+        author: 'Your Name',
+      }}
+    />
+  );
+}
+```
+
+## Live Example
+
+```jsx live
+function QuickStartExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Quick Start',
+        author: 'Retro Floppy',
+        year: '2024',
+      }}
+      onClick={() => alert('Disk clicked!')}
+    />
+  );
+}
+```
+
+## Add Interactivity
+
+Make your floppy disk interactive with click handlers:
+
+```tsx
+function InteractiveDisk() {
+  const [clicks, setClicks] = React.useState(0);
+
+  return (
+    <div>
+      <FloppyDisk
+        size="medium"
+        label={{
+          name: 'Click Me!',
+          author: `Clicks: ${clicks}`,
+        }}
+        onClick={() => setClicks(clicks + 1)}
+      />
+    </div>
+  );
+}
+```
+
+## Try Different Sizes
+
+Retro Floppy comes with 5 predefined sizes:
+
+```jsx live
+function SizeExample() {
+  return (
+    <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
+      <FloppyDisk
+        size="tiny"
+        label={{ name: 'Tiny', author: '60px' }}
+      />
+      <FloppyDisk
+        size="small"
+        label={{ name: 'Small', author: '120px' }}
+      />
+      <FloppyDisk
+        size="medium"
+        label={{ name: 'Medium', author: '200px' }}
+      />
+    </div>
+  );
+}
+```
+
+## Apply a Theme
+
+Choose from 5 built-in themes:
+
+```jsx live
+function ThemeExample() {
+  return (
+    <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+      <FloppyDisk
+        size="medium"
+        label={{ name: 'Dark Theme', author: 'Sleek' }}
+        theme={{
+          diskColor: '#2a2a2a',
+          slideColor: '#666',
+          labelColor: '#1a1a1a',
+          labelTextColor: '#fff',
+        }}
+      />
+    </div>
+  );
+}
+```
+
+## What's Next?
+
+Now that you have your first component working, explore more features:
+
+- **[Setup Guide](/docs/getting-started/setup)** - Framework-specific configuration
+- **[Themes](/docs/examples/themes)** - Explore all 5 built-in themes
+- **[Sizes](/docs/examples/sizes)** - Learn about size variants
+- **[Interactions](/docs/examples/interactions)** - Add click, hover, and keyboard events
+- **[API Reference](/docs/api/props)** - Complete props documentation
+
+## Common Patterns
+
+### File Manager
+
+```tsx
+const files = [
+  { id: 1, name: 'Document.txt', size: '1.44 MB' },
+  { id: 2, name: 'Photo.jpg', size: '880 KB' },
+];
+
+function FileManager() {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+      {files.map(file => (
+        <FloppyDisk
+          key={file.id}
+          size="medium"
+          label={{ name: file.name, size: file.size }}
+          onClick={() => console.log('Open', file.name)}
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+That's it! You're now ready to build amazing retro interfaces with Retro Floppy.
+

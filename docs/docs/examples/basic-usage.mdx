@@ -1,0 +1,180 @@
+---
+sidebar_position: 1
+---
+
+# Basic Usage
+
+Learn the fundamentals of using the Retro Floppy component.
+
+## Minimal Example
+
+The simplest way to use Retro Floppy:
+
+```jsx live
+function MinimalExample() {
+  return <FloppyDisk />;
+}
+```
+
+## With Label
+
+Add a label to display information on the disk:
+
+```jsx live
+function LabelExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'My Document',
+        author: 'John Doe',
+      }}
+    />
+  );
+}
+```
+
+## Complete Label
+
+Use all label fields for maximum information:
+
+```jsx live
+function CompleteLabelExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Project Files',
+        author: 'Development Team',
+        year: '2024',
+        description: 'Source code and assets',
+        type: 'ZIP',
+        size: '1.44 MB',
+      }}
+    />
+  );
+}
+```
+
+## Click Handler
+
+Make the disk interactive with a click handler:
+
+```jsx live
+function ClickableExample() {
+  const [message, setMessage] = React.useState('Click the disk!');
+
+  return (
+    <div>
+      <FloppyDisk
+        size="medium"
+        label={{
+          name: 'Click Me',
+          author: message,
+        }}
+        onClick={() => setMessage('Clicked! 🎉')}
+      />
+    </div>
+  );
+}
+```
+
+## Double Click
+
+Handle double-click events:
+
+```jsx live
+function DoubleClickExample() {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    <div>
+      <FloppyDisk
+        size="medium"
+        label={{
+          name: 'Double Click',
+          author: `Count: ${count}`,
+        }}
+        onDoubleClick={() => setCount(count + 1)}
+      />
+    </div>
+  );
+}
+```
+
+## Hover Handler
+
+Respond to hover events:
+
+```jsx live
+function HoverExample() {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  return (
+    <div>
+      <FloppyDisk
+        size="medium"
+        label={{
+          name: isHovered ? 'Hovering!' : 'Hover Me',
+          author: 'Interactive',
+        }}
+        onHover={(hovering) => setIsHovered(hovering)}
+      />
+    </div>
+  );
+}
+```
+
+## Multiple Disks
+
+Render multiple disks in a grid:
+
+```jsx live
+function MultipleDisksExample() {
+  const disks = [
+    { id: 1, name: 'Photos', author: 'Vacation 2024' },
+    { id: 2, name: 'Documents', author: 'Work Files' },
+    { id: 3, name: 'Music', author: 'Playlist' },
+    { id: 4, name: 'Videos', author: 'Movies' },
+  ];
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+      {disks.map(disk => (
+        <FloppyDisk
+          key={disk.id}
+          size="small"
+          label={{ name: disk.name, author: disk.author }}
+          onClick={() => alert(`Opening ${disk.name}`)}
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+## Custom Size
+
+Use a custom pixel value for size:
+
+```jsx live
+function CustomSizeExample() {
+  return (
+    <FloppyDisk
+      size={150}
+      label={{
+        name: 'Custom Size',
+        author: '150px',
+      }}
+    />
+  );
+}
+```
+
+## Next Steps
+
+- **[Themes](/docs/examples/themes)** - Explore built-in themes
+- **[Sizes](/docs/examples/sizes)** - Learn about size variants
+- **[States](/docs/examples/states)** - Loading, error, and disabled states
+- **[API Reference](/docs/api/props)** - Complete props documentation
+

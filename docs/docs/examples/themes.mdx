@@ -1,0 +1,195 @@
+---
+sidebar_position: 2
+---
+
+# Themes
+
+Retro Floppy comes with 5 built-in themes and full custom theme support.
+
+## Built-in Themes
+
+### Light Theme (Default)
+
+Classic floppy disk appearance optimized for light backgrounds.
+
+```jsx live
+function LightThemeExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Light Theme',
+        author: 'Default',
+        year: '2024',
+      }}
+      theme={LIGHT_FLOPPY_THEME}
+    />
+  );
+}
+```
+
+### Dark Theme
+
+Sleek dark appearance optimized for dark backgrounds.
+
+```jsx live
+function DarkThemeExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Dark Theme',
+        author: 'Sleek',
+        year: '2024',
+      }}
+      theme={DARK_FLOPPY_THEME}
+    />
+  );
+}
+```
+
+### Neon Theme
+
+Vibrant cyberpunk aesthetic with magenta and cyan accents.
+
+```jsx live
+function NeonThemeExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Neon Theme',
+        author: 'Cyberpunk',
+        year: '2024',
+      }}
+      theme={NEON_THEME}
+    />
+  );
+}
+```
+
+### Retro Theme
+
+Warm vintage colors reminiscent of 80s and 90s computing.
+
+```jsx live
+function RetroThemeExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Retro Theme',
+        author: 'Vintage',
+        year: '2024',
+      }}
+      theme={RETRO_THEME}
+    />
+  );
+}
+```
+
+### Pastel Theme
+
+Soft, modern pastel colors for a gentle aesthetic.
+
+```jsx live
+function PastelThemeExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Pastel Theme',
+        author: 'Modern',
+        year: '2024',
+      }}
+      theme={PASTEL_THEME}
+    />
+  );
+}
+```
+
+## Theme Comparison
+
+See all themes side by side:
+
+```jsx live
+function ThemeComparisonExample() {
+  const themes = [
+    { name: 'Light', theme: LIGHT_FLOPPY_THEME },
+    { name: 'Dark', theme: DARK_FLOPPY_THEME },
+    { name: 'Neon', theme: NEON_THEME },
+    { name: 'Retro', theme: RETRO_THEME },
+    { name: 'Pastel', theme: PASTEL_THEME },
+  ];
+
+  return (
+    <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+      {themes.map(({ name, theme }) => (
+        <div key={name} style={{ textAlign: 'center' }}>
+          <FloppyDisk
+            size="small"
+            label={{ name, author: 'Theme' }}
+            theme={theme}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Custom Theme
+
+Create your own custom theme:
+
+```jsx live
+function CustomThemeExample() {
+  const customTheme = {
+    diskColor: '#ff6b6b',
+    slideColor: '#ffd93d',
+    backgroundColor: '#6bcf7f',
+    labelColor: '#fff',
+    labelTextColor: '#333',
+  };
+
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Custom Theme',
+        author: 'Your Colors',
+      }}
+      theme={customTheme}
+    />
+  );
+}
+```
+
+## Partial Theme Override
+
+Override only specific colors:
+
+```jsx live
+function PartialThemeExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{
+        name: 'Partial Override',
+        author: 'Custom Label',
+      }}
+      theme={{
+        labelColor: '#ff6b6b',
+        labelTextColor: '#fff',
+      }}
+    />
+  );
+}
+```
+
+## Next Steps
+
+- **[Gradients](/docs/examples/gradients)** - Dynamic gradient backgrounds
+- **[API Reference](/docs/api/themes)** - Complete theme API
+- **[Customization Guide](/docs/guides/customization)** - Advanced theming
+

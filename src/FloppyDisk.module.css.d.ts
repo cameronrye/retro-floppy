@@ -2,6 +2,8 @@ declare const styles: {
   readonly silhouette: string;
   readonly selected: string;
   readonly disabled: string;
+  readonly loading: string;
+  readonly error: string;
   readonly static: string;
   readonly compact: string;
   readonly notch: string;
@@ -21,7 +23,8 @@ declare const styles: {
   readonly lineText: string;
   readonly yearText: string;
   readonly redLine: string;
+  readonly badge: string;
+  readonly overlay: string;
 };
 
 export default styles;
-

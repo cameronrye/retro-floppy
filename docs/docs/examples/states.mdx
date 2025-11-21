@@ -1,0 +1,90 @@
+---
+sidebar_position: 5
+---
+
+# States
+
+Handle loading, error, disabled, and selected states.
+
+## Loading State
+
+Show a loading indicator:
+
+```jsx live
+function LoadingExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{ name: 'Loading...', author: 'Please wait' }}
+      loading={true}
+    />
+  );
+}
+```
+
+## Error State
+
+Display an error state:
+
+```jsx live
+function ErrorExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{ name: 'Error', author: 'Failed to load' }}
+      error={true}
+    />
+  );
+}
+```
+
+## Disabled State
+
+Disable interaction:
+
+```jsx live
+function DisabledExample() {
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{ name: 'Disabled', author: 'Cannot interact' }}
+      disabled={true}
+    />
+  );
+}
+```
+
+## Selected State
+
+Highlight selected disks:
+
+```jsx live
+function SelectedExample() {
+  const [selected, setSelected] = React.useState(false);
+
+  return (
+    <FloppyDisk
+      size="medium"
+      label={{ name: selected ? 'Selected' : 'Click to select', author: 'Interactive' }}
+      selected={selected}
+      onClick={() => setSelected(!selected)}
+    />
+  );
+}
+```
+
+## Combined States
+
+```jsx live
+function CombinedStatesExample() {
+  return (
+    <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+      <FloppyDisk size="small" label={{ name: 'Normal' }} />
+      <FloppyDisk size="small" label={{ name: 'Loading' }} loading />
+      <FloppyDisk size="small" label={{ name: 'Error' }} error />
+      <FloppyDisk size="small" label={{ name: 'Disabled' }} disabled />
+      <FloppyDisk size="small" label={{ name: 'Selected' }} selected />
+    </div>
+  );
+}
+```
