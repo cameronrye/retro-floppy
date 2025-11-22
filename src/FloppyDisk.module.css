@@ -201,23 +201,18 @@
   cursor: grab;
 }
 
-/* Only apply hover effect when slide hover is enabled (default) */
-.slide:hover {
-  right: 25%;
+/* Marker class for when slide hover is disabled */
+.slideDisabled {
+  pointer-events: auto; /* Ensure class is exported by CSS modules */
 }
 
-/* When slideDisabled is true, prevent hover effect - slide stays closed */
-.slide.slideDisabled:hover {
-  right: 1.5%;
-  cursor: default;
+/* Only apply hover effect when slide hover is enabled (not disabled) */
+.slide:not(.slideDisabled):hover {
+  right: 25% !important;
 }
 
-.slide:active {
+.slide:not(.slideDisabled):active {
   cursor: grabbing;
-}
-
-.slide.slideDisabled:active {
-  cursor: default;
 }
 
 .cutout {

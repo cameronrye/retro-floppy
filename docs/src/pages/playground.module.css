@@ -57,7 +57,7 @@
   padding: 2rem;
   border: 2px solid var(--ifm-color-emphasis-200);
   border-radius: 1rem;
-  max-height: calc(100vh - 60px);
+  max-height: calc(100vh - 20px);
   overflow-y: auto;
 }
 

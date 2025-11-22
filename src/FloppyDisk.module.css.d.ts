@@ -15,6 +15,7 @@ declare const styles: {
   readonly slideBack: string;
   readonly drop: string;
   readonly slide: string;
+  readonly slideDisabled: string;
   readonly cutout: string;
   readonly text: string;
   readonly labelSlot: string;
