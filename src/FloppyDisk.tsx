@@ -42,6 +42,7 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = React.memo(
     disabled = false,
     loading = false,
     error = false,
+    enableSlideHover,
     onClick,
     onDoubleClick,
     onHover,
@@ -55,6 +56,13 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = React.memo(
     ariaLabel,
   }) => {
     const sizeInPx = typeof size === 'number' ? size : SIZE_MAP[size];
+
+    // Default enableSlideHover based on size: true for medium and larger, false for tiny/small
+    const slideHoverEnabled =
+      enableSlideHover ??
+      (typeof size === 'string'
+        ? ['medium', 'large', 'hero'].includes(size)
+        : sizeInPx >= SIZE_MAP.medium);
 
     // Runtime validation for custom size values
     if (
@@ -289,7 +297,9 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = React.memo(
           <div className={styles.slideBack}>
             <div className={styles.drop} />
           </div>
-          <div className={styles.slide}>
+          <div
+            className={`${styles.slide} ${!slideHoverEnabled ? styles.slideDisabled : ''}`}
+          >
             <div className={styles.cutout} />
             <div className={styles.text}>
               <svg viewBox="0 0 50 15" preserveAspectRatio="xMaxYMid meet">

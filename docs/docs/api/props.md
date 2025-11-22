@@ -79,4 +79,11 @@ Disable interaction.
 
 Show selected state.
 
+### enableSlideHover
+
+- **Type**: `boolean`
+- **Default**: `true` for medium/large/hero sizes, `false` for tiny/small sizes
+
+Enable hover animation for the metal slide. When `true`, the slide opens on hover. When `false`, the slide stays closed and does not respond to hover. Defaults to `true` for medium and larger sizes, and `false` for tiny and small sizes.
+
 See [Types](/docs/api/types) for detailed type definitions.

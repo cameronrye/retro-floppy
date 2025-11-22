@@ -91,7 +91,6 @@ function HomepageHeader() {
                 name: 'Retro Floppy',
                 author: 'Cameron Rye',
                 year: '2024',
-                description: 'Interactive React Component',
                 type: 'NPM',
                 size: '< 15 KB',
               }}

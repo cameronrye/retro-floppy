@@ -55,6 +55,7 @@ interface FloppyDiskProps {
   disabled?: boolean;
   loading?: boolean;
   error?: boolean;
+  enableSlideHover?: boolean;
   onClick?: () => void;
   onDoubleClick?: () => void;
   onHover?: (isHovering: boolean) => void;

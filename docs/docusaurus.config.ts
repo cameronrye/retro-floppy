@@ -57,13 +57,13 @@ const config: Config = {
   themes: ['@docusaurus/theme-live-codeblock'],
 
   themeConfig: {
-    // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
+    // Social card for sharing
+    image: 'img/social-card.svg',
     colorMode: {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: '💾 Retro Floppy',
+      title: 'Retro Floppy',
       logo: {
         alt: 'Retro Floppy Logo',
         src: 'img/logo.svg',

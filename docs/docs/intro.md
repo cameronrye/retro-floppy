@@ -2,10 +2,6 @@
 sidebar_position: 1
 ---
 
----
-
-## sidebar_position: 1
-
 # Welcome to Retro Floppy
 
 A beautiful, interactive 3.5" floppy disk React component for retro-themed UIs. Perfect for file managers, software libraries, game launchers, and nostalgic interfaces.
@@ -16,13 +12,13 @@ Retro Floppy is a highly customizable React component that renders a realistic, 
 
 ## Key Features
 
-- **🎨 Highly Customizable** - 5 built-in themes plus full custom theme support
-- **✨ Interactive** - Hover animations, click handlers, and keyboard navigation
-- **📏 Flexible Sizing** - From tiny (60px) to hero (600px) or custom pixel values
-- **⚡ Performant** - Optimized for rendering multiple instances in lists/grids
-- **♿ Accessible** - ARIA labels and keyboard navigation support
-- **📘 TypeScript** - Full type definitions included
-- **🪶 Zero Dependencies** - Only requires React as a peer dependency
+- **Highly Customizable** - 5 built-in themes plus full custom theme support
+- **Interactive** - Hover animations, click handlers, and keyboard navigation
+- **Flexible Sizing** - From tiny (60px) to hero (600px) or custom pixel values
+- **Performant** - Optimized for rendering multiple instances in lists/grids
+- **Accessible** - ARIA labels and keyboard navigation support
+- **TypeScript** - Full type definitions included
+- **Zero Dependencies** - Only requires React as a peer dependency
 
 ## Quick Example
 

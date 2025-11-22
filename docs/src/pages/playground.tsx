@@ -22,7 +22,7 @@ const THEMES = {
 export default function Playground() {
   const [size, setSize] = useState<
     'tiny' | 'small' | 'medium' | 'large' | 'hero'
-  >('medium');
+  >('hero');
   const [themeName, setThemeName] = useState<keyof typeof THEMES>('light');
   const [enableGradient, setEnableGradient] = useState(false);
   const [gradientType, setGradientType] = useState<
@@ -31,13 +31,14 @@ export default function Playground() {
   const [name, setName] = useState('Retro Floppy');
   const [author, setAuthor] = useState('Cameron Rye');
   const [year, setYear] = useState('2024');
-  const [description, setDescription] = useState('Interactive Component');
+  const [description, setDescription] = useState('');
   const [type, setType] = useState('NPM');
   const [diskSize, setDiskSize] = useState('< 15 KB');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [selected, setSelected] = useState(false);
+  const [enableSlideHover, setEnableSlideHover] = useState(true);
 
   const theme = {
     ...THEMES[themeName],
@@ -77,6 +78,7 @@ export default function Playground() {
                   error={error}
                   disabled={disabled}
                   selected={selected}
+                  enableSlideHover={enableSlideHover}
                   onClick={() => alert('Disk clicked!')}
                 />
               </div>
@@ -134,6 +136,18 @@ export default function Playground() {
                     <option value="auto">Auto</option>
                   </select>
                 )}
+              </div>
+
+              <div className={styles.section}>
+                <h3>Metal Slide</h3>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={enableSlideHover}
+                    onChange={(e) => setEnableSlideHover(e.target.checked)}
+                  />
+                  Enable Hover Animation
+                </label>
               </div>
 
               <div className={styles.section}>

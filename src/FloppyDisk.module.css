@@ -201,12 +201,23 @@
   cursor: grab;
 }
 
+/* Only apply hover effect when slide hover is enabled (default) */
 .slide:hover {
   right: 25%;
 }
 
+/* When slideDisabled is true, prevent hover effect - slide stays closed */
+.slide.slideDisabled:hover {
+  right: 1.5%;
+  cursor: default;
+}
+
 .slide:active {
   cursor: grabbing;
+}
+
+.slide.slideDisabled:active {
+  cursor: default;
 }
 
 .cutout {

@@ -1,14 +1,19 @@
-# Retro Floppy
+<div align="center">
+  <img src="docs/static/img/logo-banner.svg" alt="Retro Floppy" width="600">
 
-[![npm version](https://img.shields.io/npm/v/retro-floppy.svg?style=flat-square)](https://www.npmjs.com/package/retro-floppy)
-[![npm downloads](https://img.shields.io/npm/dm/retro-floppy.svg?style=flat-square)](https://www.npmjs.com/package/retro-floppy)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/retro-floppy?style=flat-square)](https://bundlephobia.com/package/retro-floppy)
-[![license](https://img.shields.io/npm/l/retro-floppy.svg?style=flat-square)](https://github.com/cameronrye/retro-floppy/blob/main/LICENSE)
-[![CI](https://img.shields.io/github/actions/workflow/status/cameronrye/retro-floppy/ci.yml?branch=main&style=flat-square)](https://github.com/cameronrye/retro-floppy/actions)
+  <p align="center">
+    <a href="https://www.npmjs.com/package/retro-floppy"><img src="https://img.shields.io/npm/v/retro-floppy.svg?style=flat-square" alt="npm version"></a>
+    <a href="https://www.npmjs.com/package/retro-floppy"><img src="https://img.shields.io/npm/dm/retro-floppy.svg?style=flat-square" alt="npm downloads"></a>
+    <a href="https://bundlephobia.com/package/retro-floppy"><img src="https://img.shields.io/bundlephobia/minzip/retro-floppy?style=flat-square" alt="bundle size"></a>
+    <a href="https://github.com/cameronrye/retro-floppy/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/retro-floppy.svg?style=flat-square" alt="license"></a>
+    <a href="https://github.com/cameronrye/retro-floppy/actions"><img src="https://img.shields.io/github/actions/workflow/status/cameronrye/retro-floppy/ci.yml?branch=main&style=flat-square" alt="CI"></a>
+  </p>
 
-A beautiful, interactive 3.5" floppy disk React component for retro-themed UIs. Perfect for file managers, software libraries, game launchers, and nostalgic interfaces.
-
-![Floppy Disk Component](https://via.placeholder.com/800x400?text=Floppy+Disk+Component+Demo)
+  <p align="center">
+    A beautiful, interactive 3.5" floppy disk React component for retro-themed UIs.<br>
+    Perfect for file managers, software libraries, game launchers, and nostalgic interfaces.
+  </p>
+</div>
 
 ## Features
 

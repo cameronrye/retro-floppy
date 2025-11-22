@@ -167,6 +167,13 @@ export interface FloppyDiskProps {
   error?: boolean;
 
   /**
+   * Enable hover animation for the metal slide
+   * When true, slide opens on hover. When false, slide stays closed.
+   * @default true for medium/large/hero sizes, false for tiny/small
+   */
+  enableSlideHover?: boolean;
+
+  /**
    * Click handler - called when disk is clicked
    */
   onClick?: () => void;
