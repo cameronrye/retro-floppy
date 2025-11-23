@@ -1,8 +1,39 @@
+# Source files
 src/
 example/
+docs/
+scripts/
+test/
+coverage/
+
+# Config files
 .gitignore
+.eslintrc*
+.prettierrc*
 tsconfig.json
 rollup.config.js
+vitest.config.ts
+vitest.setup.ts
+eslint.config.js
+
+# Documentation (keep only essential docs)
+*.md
+!README.md
+!LICENSE
+!CHANGELOG.md
+
+# Development files
 *.log
 .DS_Store
+node_modules/
+.husky/
+.vscode/
+.idea/
 
+# CI/CD
+.github/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/

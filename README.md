@@ -5,8 +5,9 @@
     <a href="https://www.npmjs.com/package/retro-floppy"><img src="https://img.shields.io/npm/v/retro-floppy.svg?style=flat-square" alt="npm version"></a>
     <a href="https://www.npmjs.com/package/retro-floppy"><img src="https://img.shields.io/npm/dm/retro-floppy.svg?style=flat-square" alt="npm downloads"></a>
     <a href="https://bundlephobia.com/package/retro-floppy"><img src="https://img.shields.io/bundlephobia/minzip/retro-floppy?style=flat-square" alt="bundle size"></a>
-    <a href="https://github.com/cameronrye/retro-floppy/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/retro-floppy.svg?style=flat-square" alt="license"></a>
-    <a href="https://github.com/cameronrye/retro-floppy/actions"><img src="https://img.shields.io/github/actions/workflow/status/cameronrye/retro-floppy/ci.yml?branch=main&style=flat-square" alt="CI"></a>
+    <a href="https://github.com/cameronrye/floppydisk/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/retro-floppy.svg?style=flat-square" alt="license"></a>
+    <a href="https://github.com/cameronrye/floppydisk/actions"><img src="https://img.shields.io/github/actions/workflow/status/cameronrye/floppydisk/ci.yml?branch=main&style=flat-square" alt="CI"></a>
+    <img src="https://img.shields.io/badge/coverage-97%25-brightgreen?style=flat-square" alt="coverage">
   </p>
 
   <p align="center">

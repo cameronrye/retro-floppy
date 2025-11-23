@@ -12,10 +12,42 @@ import { generateLabelGradient } from './gradientUtils';
 // Constants for component behavior
 const FONT_SCALE_MIN = 0.4;
 const FONT_SCALE_MAX = 1.5;
+const FONT_SCALE_DEFAULT = 1;
 const LABEL_WIDTH_RATIO = 0.88;
 const BORDER_THICKNESS_DIVISOR = 200;
+const BORDER_THICKNESS_MIN = 1;
 const SIZE_WARNING_MIN = 10;
 const SIZE_WARNING_MAX = 1000;
+const COLOR_ADJUSTMENT_PERCENT = 10;
+const DEFAULT_ANIMATION_DURATION_MS = 500;
+const DISABLED_TAB_INDEX = -1;
+const ENABLED_TAB_INDEX = 0;
+const NAME_LINE_INDEX = 0;
+const AUTHOR_LINE_INDEX = 1;
+const INITIAL_FONT_SCALES = [1, 1];
+
+// SVG constants for slide text
+const SLIDE_TYPE_VIEWBOX = '0 0 50 15';
+const SLIDE_TYPE_TEXT_X = '45';
+const SLIDE_TYPE_TEXT_Y = '12';
+const SLIDE_CAPACITY_VIEWBOX = '0 0 80 15';
+const SLIDE_CAPACITY_TEXT_X = '72';
+const SLIDE_CAPACITY_TEXT_Y = '12';
+
+// CSS transform constants
+const TRANSFORM_CENTER_PERCENT = '-50%';
+
+// Color manipulation constants
+const HEX_SHORT_LENGTH = 3;
+const HEX_FULL_LENGTH = 6;
+const HEX_RADIX = 16;
+const PERCENT_TO_RGB_MULTIPLIER = 2.55;
+const RGB_MAX = 255;
+const RGB_MIN = 0;
+const RGB_SHIFT_RED = 16;
+const RGB_SHIFT_GREEN = 8;
+const RGB_SHIFT_BLUE = 0;
+const HEX_PREFIX_SHIFT = 24;
 
 /**
  * A beautiful, interactive 3.5" floppy disk React component for retro-themed UIs.
@@ -70,7 +102,7 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = React.memo(
       (size < SIZE_WARNING_MIN || size > SIZE_WARNING_MAX)
     ) {
       console.warn(
-        `FloppyDisk: size ${size}px is outside recommended range (${SIZE_WARNING_MIN}-${SIZE_WARNING_MAX}px)`,
+        `FloppyDisk: size ${size}px is outside recommended range (${SIZE_WARNING_MIN}-${SIZE_WARNING_MAX}px). This may cause rendering issues or poor performance. Consider using predefined sizes: 'tiny', 'small', 'medium', 'large', or 'hero'.`,
       );
     }
 
@@ -78,11 +110,11 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = React.memo(
 
     // Refs for dynamic font sizing
     const lineRefs = useRef<(HTMLDivElement | null)[]>([]);
-    const [fontScales, setFontScales] = useState<number[]>([1, 1]);
+    const [fontScales, setFontScales] = useState<number[]>(INITIAL_FONT_SCALES);
 
     // Calculate border thickness based on size
     const borderThickness = Math.max(
-      1,
+      BORDER_THICKNESS_MIN,
       Math.round(sizeInPx / BORDER_THICKNESS_DIVISOR),
     );
 
@@ -109,11 +141,11 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = React.memo(
       '--floppy-color': mergedTheme.diskColor,
       '--floppy-highlight': lightenColor(
         mergedTheme.diskColor || DEFAULT_THEME.diskColor!,
-        10,
+        COLOR_ADJUSTMENT_PERCENT,
       ),
       '--floppy-shadow': darkenColor(
         mergedTheme.diskColor || DEFAULT_THEME.diskColor!,
-        10,
+        COLOR_ADJUSTMENT_PERCENT,
       ),
       '--slide-color': mergedTheme.slideColor,
       '--bg-color': mergedTheme.backgroundColor,
@@ -128,7 +160,7 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = React.memo(
         : 'none',
       '--animation-duration': animation.disableAnimations
         ? '0ms'
-        : `${animation.hoverDuration || 500}ms`,
+        : `${animation.hoverDuration || DEFAULT_ANIMATION_DURATION_MS}ms`,
       '--animation-easing': animation.easing || 'linear',
     } as CSSProperties;
 
@@ -217,7 +249,32 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = React.memo(
       ariaLabel ||
       (label ? `${label.name} by ${label.author || 'Unknown'}` : 'Floppy disk');
 
-    // Dynamic font sizing effect (useLayoutEffect to prevent flash of unstyled content)
+    /**
+     * Dynamic Font Scaling Algorithm
+     *
+     * This effect implements an adaptive font scaling system that automatically
+     * adjusts text size to fit within the label area while maintaining readability.
+     *
+     * Algorithm Overview:
+     * 1. Measure the natural (unscaled) width of each text line
+     * 2. Compare against available container width (with padding)
+     * 3. Calculate optimal scale factor to fit text within bounds
+     * 4. Clamp scale between min (0.4) and max (1.5) for readability
+     *
+     * Key Design Decisions:
+     * - Only scales the NAME field (index 0) to prevent author text from becoming too small
+     * - Uses scaleX transform instead of font-size for smoother rendering
+     * - Temporarily removes transforms during measurement for accurate dimensions
+     * - Uses useLayoutEffect to prevent flash of unstyled content (FOUC)
+     * - Recalculates on labelLines or sizeInPx changes for responsiveness
+     *
+     * Scale Bounds:
+     * - MIN (0.4): Prevents text from becoming unreadable when compressed
+     * - MAX (1.5): Prevents excessive expansion that looks distorted
+     * - DEFAULT (1.0): Natural size when no scaling needed
+     *
+     * @see LABEL_WIDTH_RATIO (0.88) - Reserves 12% padding for visual breathing room
+     */
     useLayoutEffect(() => {
       const calculateScales = () => {
         const newScales: number[] = [];
@@ -225,49 +282,57 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = React.memo(
         lineRefs.current.forEach((lineRef, index) => {
           if (lineRef && labelLines[index]) {
             // Only apply dynamic scaling to the name field (index 0)
-            // Author field (index 1) should display at natural size
-            if (index !== 0) {
-              newScales[index] = 1;
+            // Author field (index 1) should display at natural size to maintain hierarchy
+            if (index !== NAME_LINE_INDEX) {
+              newScales[index] = FONT_SCALE_DEFAULT;
               return;
             }
 
             // Get the actual container width (the .lines element)
             const linesContainer = lineRef.parentElement;
             if (!linesContainer) {
-              newScales[index] = 1;
+              newScales[index] = FONT_SCALE_DEFAULT;
               return;
             }
 
             // Temporarily remove transform to get true text width
+            // This is necessary because transforms affect offsetWidth/scrollWidth measurements
             const originalTransform = lineRef.style.transform;
             lineRef.style.transform = 'none';
 
-            const containerWidth = linesContainer.offsetWidth;
-            const textWidth = lineRef.scrollWidth;
+            // Measure dimensions
+            const containerWidth = linesContainer.offsetWidth; // Available space
+            const textWidth = lineRef.scrollWidth; // Natural text width
 
-            // Restore transform
+            // Restore transform immediately to prevent visual flicker
             lineRef.style.transform = originalTransform;
 
             // Calculate scale factor with padding
+            // LABEL_WIDTH_RATIO (0.88) reserves 12% for padding on both sides
             const availableWidth = containerWidth * LABEL_WIDTH_RATIO;
             const scale = availableWidth / textWidth;
 
-            // Clamp scale to allow compression and expansion
+            // Clamp scale to maintain readability and prevent distortion
+            // - If text is too wide: compress down to FONT_SCALE_MIN (0.4)
+            // - If text is narrow: allow expansion up to FONT_SCALE_MAX (1.5)
+            // - If text fits naturally: use calculated scale (likely close to 1.0)
             newScales[index] = Math.max(
               FONT_SCALE_MIN,
               Math.min(FONT_SCALE_MAX, scale),
             );
           } else {
-            newScales[index] = 1;
+            // Fallback for missing refs or empty lines
+            newScales[index] = FONT_SCALE_DEFAULT;
           }
         });
 
         setFontScales(newScales);
       };
 
-      // Calculate synchronously before paint
+      // Calculate synchronously before paint to prevent FOUC
+      // useLayoutEffect ensures this runs before browser paint
       calculateScales();
-    }, [labelLines, sizeInPx]);
+    }, [labelLines, sizeInPx]); // Recalculate when text content or disk size changes
 
     return (
       <figure
@@ -281,7 +346,7 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = React.memo(
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
-        tabIndex={disabled ? -1 : 0}
+        tabIndex={disabled ? DISABLED_TAB_INDEX : ENABLED_TAB_INDEX}
         role="button"
         aria-label={accessibleLabel}
         aria-disabled={disabled}
@@ -302,13 +367,27 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = React.memo(
           >
             <div className={styles.cutout} />
             <div className={styles.text}>
-              <svg viewBox="0 0 50 15" preserveAspectRatio="xMaxYMid meet">
-                <text x="45" y="12" textAnchor="end">
+              <svg
+                viewBox={SLIDE_TYPE_VIEWBOX}
+                preserveAspectRatio="xMaxYMid meet"
+              >
+                <text
+                  x={SLIDE_TYPE_TEXT_X}
+                  y={SLIDE_TYPE_TEXT_Y}
+                  textAnchor="end"
+                >
                   {displayType}
                 </text>
               </svg>
-              <svg viewBox="0 0 80 15" preserveAspectRatio="xMaxYMid meet">
-                <text x="72" y="12" textAnchor="end">
+              <svg
+                viewBox={SLIDE_CAPACITY_VIEWBOX}
+                preserveAspectRatio="xMaxYMid meet"
+              >
+                <text
+                  x={SLIDE_CAPACITY_TEXT_X}
+                  y={SLIDE_CAPACITY_TEXT_Y}
+                  textAnchor="end"
+                >
                   {displayCapacity}
                 </text>
               </svg>
@@ -322,17 +401,17 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = React.memo(
               {labelLines.map((line, index) => {
                 // Name field (index 0) needs translate for centering + scale
                 // Author field (index 1) needs translateX for horizontal centering only
-                const isName = index === 0;
-                const isAuthor = index === 1;
+                const isName = index === NAME_LINE_INDEX;
+                const isAuthor = index === AUTHOR_LINE_INDEX;
 
                 let transform: string;
                 let transformOrigin: string;
 
                 if (isName) {
-                  transform = `translate(-50%, -50%) scaleX(${fontScales[index]})`;
+                  transform = `translate(${TRANSFORM_CENTER_PERCENT}, ${TRANSFORM_CENTER_PERCENT}) scaleX(${fontScales[index]})`;
                   transformOrigin = 'center center';
                 } else if (isAuthor) {
-                  transform = `translateX(-50%)`;
+                  transform = `translateX(${TRANSFORM_CENTER_PERCENT})`;
                   transformOrigin = 'center center';
                 } else {
                   transform = `scaleX(${fontScales[index]})`;
@@ -371,36 +450,106 @@ export const FloppyDisk: React.FC<FloppyDiskProps> = React.memo(
 );
 
 // Helper functions for color manipulation with validation
+
 /**
- * Lightens a hex color by a given percentage
+ * Parses and validates a hex color string, converting 3-digit to 6-digit format
  * @param color - Hex color string (e.g., "#2a2a2a" or "#fff")
- * @param percent - Percentage to lighten (0-100)
- * @returns Lightened hex color string
+ * @returns Full 6-digit hex string without # prefix, or null if invalid
+ * @remarks This function does not throw errors. Invalid colors return null.
  */
-function lightenColor(color: string, percent: number): string {
-  // Remove # and handle 3-digit hex
+function parseHexColor(color: string): string | null {
   const hex = color.replace('#', '');
   const fullHex =
-    hex.length === 3
+    hex.length === HEX_SHORT_LENGTH
       ? hex
           .split('')
           .map((c) => c + c)
           .join('')
       : hex;
 
-  if (!/^[0-9A-Fa-f]{6}$/.test(fullHex)) {
+  if (!new RegExp(`^[0-9A-Fa-f]{${HEX_FULL_LENGTH}}$`).test(fullHex)) {
+    return null;
+  }
+
+  return fullHex;
+}
+
+/**
+ * Converts a 6-digit hex string to RGB values
+ * @param hex - 6-digit hex string without # prefix
+ * @returns RGB values as an object
+ * @remarks This function does not throw errors. Assumes valid hex input from parseHexColor.
+ */
+function hexToRgb(hex: string): { r: number; g: number; b: number } {
+  const num = parseInt(hex, HEX_RADIX);
+  return {
+    r: (num >> RGB_SHIFT_RED) & 0xff,
+    g: (num >> RGB_SHIFT_GREEN) & 0xff,
+    b: (num >> RGB_SHIFT_BLUE) & 0xff,
+  };
+}
+
+/**
+ * Converts RGB values to a hex color string
+ * @param r - Red value (0-255)
+ * @param g - Green value (0-255)
+ * @param b - Blue value (0-255)
+ * @returns Hex color string with # prefix
+ * @remarks This function does not throw errors. Values are clamped to 0-255 range.
+ */
+function rgbToHex(r: number, g: number, b: number): string {
+  return `#${((1 << HEX_PREFIX_SHIFT) + (r << RGB_SHIFT_RED) + (g << RGB_SHIFT_GREEN) + b).toString(HEX_RADIX).slice(1)}`;
+}
+
+/**
+ * Adjusts a hex color by a given percentage
+ * @param color - Hex color string (e.g., "#2a2a2a" or "#fff")
+ * @param percent - Percentage to adjust (0-100)
+ * @param operation - Whether to lighten or darken
+ * @returns Adjusted hex color string
+ * @remarks This function does not throw errors. Invalid colors trigger a console warning and return the original color unchanged.
+ */
+function adjustColor(
+  color: string,
+  percent: number,
+  operation: 'lighten' | 'darken',
+): string {
+  const fullHex = parseHexColor(color);
+
+  if (!fullHex) {
     console.warn(
-      `FloppyDisk: Invalid color format: ${color}. Using original color.`,
+      `FloppyDisk: Invalid color format: '${color}'. Expected hex format (e.g., '#2a2a2a' or '#fff'). Using original color.`,
     );
     return color;
   }
 
-  const num = parseInt(fullHex, 16);
-  const amt = Math.round(2.55 * percent);
-  const R = Math.min(255, ((num >> 16) & 0xff) + amt);
-  const G = Math.min(255, ((num >> 8) & 0xff) + amt);
-  const B = Math.min(255, (num & 0xff) + amt);
-  return `#${((1 << 24) + (R << 16) + (G << 8) + B).toString(16).slice(1)}`;
+  const rgb = hexToRgb(fullHex);
+  const amt = Math.round(PERCENT_TO_RGB_MULTIPLIER * percent);
+
+  let r: number, g: number, b: number;
+
+  if (operation === 'lighten') {
+    r = Math.min(RGB_MAX, rgb.r + amt);
+    g = Math.min(RGB_MAX, rgb.g + amt);
+    b = Math.min(RGB_MAX, rgb.b + amt);
+  } else {
+    r = Math.max(RGB_MIN, rgb.r - amt);
+    g = Math.max(RGB_MIN, rgb.g - amt);
+    b = Math.max(RGB_MIN, rgb.b - amt);
+  }
+
+  return rgbToHex(r, g, b);
+}
+
+/**
+ * Lightens a hex color by a given percentage
+ * @param color - Hex color string (e.g., "#2a2a2a" or "#fff")
+ * @param percent - Percentage to lighten (0-100)
+ * @returns Lightened hex color string
+ * @remarks This function does not throw errors. Invalid colors trigger a console warning and return the original color unchanged.
+ */
+function lightenColor(color: string, percent: number): string {
+  return adjustColor(color, percent, 'lighten');
 }
 
 /**
@@ -408,29 +557,8 @@ function lightenColor(color: string, percent: number): string {
  * @param color - Hex color string (e.g., "#2a2a2a" or "#fff")
  * @param percent - Percentage to darken (0-100)
  * @returns Darkened hex color string
+ * @remarks This function does not throw errors. Invalid colors trigger a console warning and return the original color unchanged.
  */
 function darkenColor(color: string, percent: number): string {
-  // Remove # and handle 3-digit hex
-  const hex = color.replace('#', '');
-  const fullHex =
-    hex.length === 3
-      ? hex
-          .split('')
-          .map((c) => c + c)
-          .join('')
-      : hex;
-
-  if (!/^[0-9A-Fa-f]{6}$/.test(fullHex)) {
-    console.warn(
-      `FloppyDisk: Invalid color format: ${color}. Using original color.`,
-    );
-    return color;
-  }
-
-  const num = parseInt(fullHex, 16);
-  const amt = Math.round(2.55 * percent);
-  const R = Math.max(0, ((num >> 16) & 0xff) - amt);
-  const G = Math.max(0, ((num >> 8) & 0xff) - amt);
-  const B = Math.max(0, (num & 0xff) - amt);
-  return `#${((1 << 24) + (R << 16) + (G << 8) + B).toString(16).slice(1)}`;
+  return adjustColor(color, percent, 'darken');
 }

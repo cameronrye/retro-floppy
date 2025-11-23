@@ -1,0 +1,308 @@
+---
+sidebar_position: 10
+---
+
+# Common Use Cases
+
+Real-world examples of using Retro Floppy in your applications.
+
+## File Manager / Gallery
+
+Display a collection of files or projects as floppy disks:
+
+```tsx live
+function FileGallery() {
+  const files = [
+    { id: 1, name: 'Project Alpha', author: 'John Doe', date: '2024-01-15' },
+    { id: 2, name: 'Design Files', author: 'Jane Smith', date: '2024-01-20' },
+    { id: 3, name: 'Meeting Notes', author: 'Bob Johnson', date: '2024-02-01' },
+    { id: 4, name: 'Budget 2024', author: 'Alice Brown', date: '2024-02-10' }
+  ];
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '20px' }}>
+      {files.map(file => (
+        <FloppyDisk
+          key={file.id}
+          size="small"
+          label={{
+            name: file.name,
+            author: file.author,
+            date: file.date
+          }}
+          onClick={() => alert(`Opening ${file.name}`)}
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+## Save Button
+
+Use as a retro-styled save button:
+
+```tsx live
+function SaveButton() {
+  const [saved, setSaved] = React.useState(false);
+
+  const handleSave = () => {
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <FloppyDisk
+        size={100}
+        label={{ name: saved ? 'Saved!' : 'Save' }}
+        theme={{
+          diskColor: saved ? '#4caf50' : '#2a2a2a',
+          enableGradient: false
+        }}
+        onClick={handleSave}
+        style={{ cursor: 'pointer' }}
+      />
+      <p>{saved ? '✓ Document saved' : 'Click to save'}</p>
+    </div>
+  );
+}
+```
+
+## Project Selector
+
+Let users choose from different projects:
+
+```tsx live
+function ProjectSelector() {
+  const [selected, setSelected] = React.useState(null);
+  
+  const projects = [
+    { id: 'web', name: 'Website Redesign', color: '#ff6b6b' },
+    { id: 'app', name: 'Mobile App', color: '#4ecdc4' },
+    { id: 'api', name: 'API Development', color: '#45b7d1' }
+  ];
+
+  return (
+    <div>
+      <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+        {projects.map(project => (
+          <FloppyDisk
+            key={project.id}
+            size="small"
+            label={{ name: project.name }}
+            theme={{
+              diskColor: selected === project.id ? project.color : '#2a2a2a',
+              enableGradient: selected === project.id
+            }}
+            onClick={() => setSelected(project.id)}
+            style={{
+              cursor: 'pointer',
+              opacity: selected && selected !== project.id ? 0.5 : 1,
+              transition: 'opacity 0.3s'
+            }}
+          />
+        ))}
+      </div>
+      {selected && (
+        <p style={{ textAlign: 'center', marginTop: '20px' }}>
+          Selected: {projects.find(p => p.id === selected)?.name}
+        </p>
+      )}
+    </div>
+  );
+}
+```
+
+## Loading State
+
+Show loading state with a pulsing disk:
+
+```tsx live
+function LoadingDisk() {
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <FloppyDisk
+        size="medium"
+        label={{ name: 'Loading...' }}
+        theme={{ enableGradient: true }}
+        style={{
+          animation: 'pulse 2s ease-in-out infinite'
+        }}
+      />
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+      `}</style>
+    </div>
+  );
+}
+```
+
+## Achievement Badge
+
+Display achievements or milestones:
+
+```tsx live
+function AchievementBadge() {
+  const achievements = [
+    { name: '100 Commits', unlocked: true },
+    { name: '1 Year', unlocked: true },
+    { name: '10 PRs', unlocked: false }
+  ];
+
+  return (
+    <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+      {achievements.map((achievement, i) => (
+        <div key={i} style={{ textAlign: 'center' }}>
+          <FloppyDisk
+            size={80}
+            label={{ name: achievement.name }}
+            theme={{
+              diskColor: achievement.unlocked ? '#ffd700' : '#666',
+              enableGradient: achievement.unlocked
+            }}
+            style={{
+              filter: achievement.unlocked ? 'none' : 'grayscale(100%)',
+              opacity: achievement.unlocked ? 1 : 0.5
+            }}
+          />
+          <p style={{ fontSize: '12px', marginTop: '5px' }}>
+            {achievement.unlocked ? '🏆 Unlocked' : '🔒 Locked'}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Version History / Timeline
+
+Show version history or timeline:
+
+```tsx live
+function VersionHistory() {
+  const versions = [
+    { version: 'v1.0.0', date: '2024-01-01', status: 'stable' },
+    { version: 'v1.1.0', date: '2024-02-01', status: 'stable' },
+    { version: 'v2.0.0', date: '2024-03-01', status: 'beta' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'center' }}>
+      {versions.map((v, i) => (
+        <React.Fragment key={i}>
+          <FloppyDisk
+            size={70}
+            label={{
+              name: v.version,
+              date: v.date
+            }}
+            theme={{
+              diskColor: v.status === 'beta' ? '#ff9800' : '#2a2a2a',
+              enableGradient: v.status === 'stable'
+            }}
+          />
+          {i < versions.length - 1 && <span style={{ fontSize: '24px' }}>→</span>}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
+```
+
+## Backup Status Indicator
+
+Show backup or sync status:
+
+```tsx live
+function BackupStatus() {
+  const [status, setStatus] = React.useState('idle');
+
+  const startBackup = () => {
+    setStatus('backing-up');
+    setTimeout(() => setStatus('complete'), 2000);
+    setTimeout(() => setStatus('idle'), 4000);
+  };
+
+  const statusConfig = {
+    idle: { name: 'Backup', color: '#2a2a2a', gradient: false },
+    'backing-up': { name: 'Backing Up...', color: '#2196f3', gradient: true },
+    complete: { name: 'Complete!', color: '#4caf50', gradient: true }
+  };
+
+  const config = statusConfig[status];
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <FloppyDisk
+        size="medium"
+        label={{ name: config.name }}
+        theme={{
+          diskColor: config.color,
+          enableGradient: config.gradient
+        }}
+        onClick={status === 'idle' ? startBackup : undefined}
+        style={{
+          cursor: status === 'idle' ? 'pointer' : 'default',
+          animation: status === 'backing-up' ? 'spin 2s linear infinite' : 'none'
+        }}
+      />
+      <style>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
+    </div>
+  );
+}
+```
+
+## Tips for Common Use Cases
+
+### Interactive Elements
+
+When using FloppyDisk as a button or interactive element:
+
+- Add `cursor: pointer` style
+- Provide visual feedback (hover, active states)
+- Use `onClick` handler
+- Consider accessibility (keyboard navigation, ARIA labels)
+
+### Lists and Grids
+
+When displaying multiple disks:
+
+- Use CSS Grid or Flexbox for layout
+- Consider virtualization for large lists (>50 items)
+- Use consistent sizing
+- Add gap/spacing between items
+
+### State Indicators
+
+When showing status or state:
+
+- Use color to indicate state (green = success, red = error, etc.)
+- Combine with gradients for visual interest
+- Add animations for loading states
+- Provide clear text labels
+
+### Performance
+
+For optimal performance in common use cases:
+
+- Memoize disk components in lists
+- Use smaller sizes for galleries
+- Disable animations for large collections
+- Lazy load off-screen disks
+
+## See Also
+
+- [Basic Usage](./basic-usage.mdx) - Getting started examples
+- [Advanced Examples](./advanced.mdx) - Complex use cases
+- [Performance Guide](../guides/performance.md) - Optimization tips
+- [Customization Guide](../guides/customization.md) - Styling options

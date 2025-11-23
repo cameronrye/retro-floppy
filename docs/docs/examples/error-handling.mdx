@@ -1,0 +1,205 @@
+---
+sidebar_position: 9
+---
+
+# Error Handling
+
+Examples of error handling and validation with Retro Floppy.
+
+## Error Boundary Wrapper
+
+Wrap FloppyDisk components in an error boundary for production safety:
+
+```tsx live
+function ErrorBoundaryExample() {
+  class ErrorBoundary extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { hasError: false };
+    }
+
+    static getDerivedStateFromError(error) {
+      return { hasError: true };
+    }
+
+    componentDidCatch(error, errorInfo) {
+      console.error('FloppyDisk Error:', error, errorInfo);
+    }
+
+    render() {
+      if (this.state.hasError) {
+        return (
+          <div style={{ 
+            padding: '20px', 
+            background: '#fee', 
+            border: '2px solid #c00',
+            borderRadius: '8px',
+            color: '#c00'
+          }}>
+            ⚠️ Something went wrong rendering the floppy disk
+          </div>
+        );
+      }
+
+      return this.props.children;
+    }
+  }
+
+  return (
+    <ErrorBoundary>
+      <FloppyDisk 
+        label={{ name: 'Protected Disk', author: 'Error Boundary' }}
+        theme={{ diskColor: '#4a90e2' }}
+      />
+    </ErrorBoundary>
+  );
+}
+```
+
+## Handling Invalid Colors
+
+The component gracefully handles invalid color formats:
+
+```tsx live
+function InvalidColorExample() {
+  // These will trigger console warnings but won't crash
+  return (
+    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+      <FloppyDisk 
+        size="small"
+        label={{ name: 'Valid Color' }}
+        theme={{ diskColor: '#2a2a2a' }}
+      />
+      <FloppyDisk 
+        size="small"
+        label={{ name: 'Invalid Color' }}
+        theme={{ diskColor: 'not-a-color' }}
+      />
+      <FloppyDisk 
+        size="small"
+        label={{ name: 'Short Hex' }}
+        theme={{ diskColor: '#abc' }}
+      />
+    </div>
+  );
+}
+```
+
+:::tip
+Check your browser console to see validation warnings for invalid colors.
+:::
+
+## Size Validation
+
+Custom sizes outside the recommended range trigger warnings:
+
+```tsx live
+function SizeValidationExample() {
+  return (
+    <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
+      <FloppyDisk 
+        size={50}
+        label={{ name: 'Small' }}
+      />
+      <FloppyDisk 
+        size={200}
+        label={{ name: 'Normal' }}
+      />
+      <FloppyDisk 
+        size={800}
+        label={{ name: 'Large' }}
+      />
+    </div>
+  );
+}
+```
+
+:::info
+Sizes outside 10-1000px will trigger a console warning but still render.
+:::
+
+## Graceful Degradation
+
+Invalid gradient options fall back to safe defaults:
+
+```tsx live
+function GradientFallbackExample() {
+  return (
+    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+      <FloppyDisk 
+        size="small"
+        label={{ name: 'Valid Gradient' }}
+        theme={{ 
+          enableGradient: true,
+          gradientOptions: {
+            colors: ['hsl(200, 70%, 70%)', 'hsl(280, 70%, 70%)']
+          }
+        }}
+      />
+      <FloppyDisk 
+        size="small"
+        label={{ name: 'Auto Fallback' }}
+        theme={{ 
+          enableGradient: true,
+          gradientOptions: {
+            colors: [] // Empty array falls back to auto-generated
+          }
+        }}
+      />
+    </div>
+  );
+}
+```
+
+## Validation Helper
+
+Create a validation helper to check props before rendering:
+
+```tsx
+interface ValidationResult {
+  isValid: boolean;
+  errors: string[];
+}
+
+function validateFloppyDiskProps(props: FloppyDiskProps): ValidationResult {
+  const errors: string[] = [];
+
+  // Validate size
+  if (typeof props.size === 'number') {
+    if (props.size < 10 || props.size > 1000) {
+      errors.push(`Size ${props.size}px is outside recommended range (10-1000px)`);
+    }
+  }
+
+  // Validate colors
+  const hexColorRegex = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
+  if (props.theme?.diskColor && !hexColorRegex.test(props.theme.diskColor)) {
+    errors.push(`Invalid diskColor: ${props.theme.diskColor}`);
+  }
+  if (props.theme?.slideColor && !hexColorRegex.test(props.theme.slideColor)) {
+    errors.push(`Invalid slideColor: ${props.theme.slideColor}`);
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors
+  };
+}
+
+// Usage
+function ValidatedFloppyDisk(props: FloppyDiskProps) {
+  const validation = validateFloppyDiskProps(props);
+  
+  if (!validation.isValid) {
+    console.warn('FloppyDisk validation errors:', validation.errors);
+  }
+  
+  return <FloppyDisk {...props} />;
+}
+```
+
+## See Also
+
+- [Error Handling Guide](../guides/error-handling.md) - Comprehensive error handling documentation
+- [TypeScript Guide](../guides/typescript.md) - Type safety best practices
+

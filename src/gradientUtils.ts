@@ -5,6 +5,9 @@
 /**
  * Simple seeded pseudo-random number generator (Mulberry32)
  * Returns a function that generates deterministic random numbers between 0 and 1
+ * @param seed - Numeric seed for deterministic random generation
+ * @returns Function that generates random numbers between 0 and 1
+ * @remarks This function does not throw errors. Always returns a valid random number generator.
  */
 function createSeededRandom(seed: number): () => number {
   let state = seed;
@@ -18,6 +21,9 @@ function createSeededRandom(seed: number): () => number {
 
 /**
  * Generate a seed from a string (label name)
+ * @param str - String to convert to numeric seed
+ * @returns Numeric seed value (always positive)
+ * @remarks This function does not throw errors. Empty strings return a default seed of 12345.
  */
 function stringToSeed(str: string): number {
   if (!str) return 12345; // Default seed for empty strings
@@ -31,31 +37,69 @@ function stringToSeed(str: string): number {
 }
 
 /**
- * Generate a soft, harmonious color palette with pastel tones
- * Uses analogous colors (close on the color wheel) for smooth, pleasing gradients
+ * Gradient Color Palette Generation Algorithm
+ *
+ * Generates soft, harmonious color palettes optimized for floppy disk labels.
+ * Uses color theory principles to create visually pleasing, non-clashing gradients.
+ *
+ * Algorithm Overview:
+ * 1. Generate deterministic random numbers from seed (label name hash)
+ * 2. Select a random base hue (0-360 degrees on color wheel)
+ * 3. Create 2-3 analogous colors (close on color wheel)
+ * 4. Apply pastel-optimized saturation and lightness values
+ *
+ * Color Theory Principles:
+ * - Analogous Color Scheme: Colors within 15-45 degrees create harmony
+ * - Pastel Optimization: Low saturation (25-50%) + high lightness (65-85%)
+ * - Limited Palette: 2-3 colors prevent visual chaos in small label area
+ *
+ * HSL Color Space Benefits:
+ * - Hue: Intuitive color wheel representation (0=red, 120=green, 240=blue)
+ * - Saturation: Easy control of color intensity (0%=gray, 100%=vivid)
+ * - Lightness: Simple brightness adjustment (0%=black, 50%=pure, 100%=white)
+ *
+ * @param seed - Numeric seed for deterministic color generation
+ * @returns Array of 2-3 HSL color strings
+ * @remarks This function does not throw errors. Always returns a valid color palette.
+ *
+ * @example
+ * // Seed 12345 might generate:
+ * // ["hsl(210, 35%, 75%)", "hsl(225, 40%, 70%)"]
+ * // Blue-ish pastel gradient with 15-degree hue shift
  */
 function generateColorPalette(seed: number): string[] {
   const random = createSeededRandom(seed);
 
-  // Choose a base hue
+  // Choose a base hue (0-360 degrees on the color wheel)
+  // This determines the primary color family (red, orange, yellow, green, etc.)
   const baseHue = random() * 360;
 
-  // Generate 2-3 colors for smoother gradients (not too many colors)
+  // Generate 2-3 colors for smoother gradients
+  // Too few colors (1) = boring, too many (4+) = chaotic in small space
   const colorCount = 2 + Math.floor(random() * 2); // 2-3 colors
   const colors: string[] = [];
 
   for (let i = 0; i < colorCount; i++) {
-    // Use analogous color scheme (hues within 30-60 degrees)
-    // This creates harmonious, non-clashing gradients
-    const hueOffset = (random() * 30 + 15) * i; // 15-45 degree spread
-    const hue = (baseHue + hueOffset) % 360;
+    // Analogous Color Scheme: Use hues within 30-60 degrees of base
+    // This creates harmonious, non-clashing gradients that feel cohesive
+    // Formula: 15-45 degree spread per color index
+    // - Color 0: baseHue + 0-0 = baseHue
+    // - Color 1: baseHue + 15-45 = slightly shifted
+    // - Color 2: baseHue + 30-90 = more shifted (still analogous)
+    const hueOffset = (random() * 30 + 15) * i; // 15-45 degree spread per step
+    const hue = (baseHue + hueOffset) % 360; // Wrap around at 360
 
-    // Much lower saturation for soft, pastel-like colors (25-50%)
+    // Pastel Saturation: 25-50% for soft, muted colors
+    // Lower saturation = less intense, more pleasant for backgrounds
+    // Avoids garish, overly-vivid colors that strain the eyes
     const saturation = 25 + random() * 25;
 
-    // Higher lightness for lighter, more pleasant colors (65-85%)
+    // Pastel Lightness: 65-85% for light, airy colors
+    // Higher lightness = brighter, more cheerful appearance
+    // Ensures good contrast with dark text (accessibility)
     const lightness = 65 + random() * 20;
 
+    // Format as HSL string for CSS compatibility
     colors.push(
       `hsl(${Math.round(hue)}, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`,
     );
@@ -66,6 +110,9 @@ function generateColorPalette(seed: number): string[] {
 
 /**
  * Convert HSL color to RGB values
+ * @param hsl - HSL color string (e.g., "hsl(200, 50%, 70%)")
+ * @returns RGB values as an object
+ * @remarks This function does not throw errors. Invalid HSL strings return white (255, 255, 255).
  */
 function hslToRgb(hsl: string): { r: number; g: number; b: number } {
   const match = hsl.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
@@ -106,6 +153,11 @@ function hslToRgb(hsl: string): { r: number; g: number; b: number } {
 /**
  * Calculate relative luminance according to WCAG formula
  * https://www.w3.org/TR/WCAG20/#relativeluminancedef
+ * @param r - Red value (0-255)
+ * @param g - Green value (0-255)
+ * @param b - Blue value (0-255)
+ * @returns Relative luminance value (0-1)
+ * @remarks This function does not throw errors. Always returns a valid luminance value.
  */
 function calculateLuminance(r: number, g: number, b: number): number {
   const [rs, gs, bs] = [r, g, b].map((c) => {
@@ -118,6 +170,10 @@ function calculateLuminance(r: number, g: number, b: number): number {
 /**
  * Calculate contrast ratio between two colors
  * https://www.w3.org/TR/WCAG20/#contrast-ratiodef
+ * @param lum1 - Luminance of first color (0-1)
+ * @param lum2 - Luminance of second color (0-1)
+ * @returns Contrast ratio (1-21)
+ * @remarks This function does not throw errors. Always returns a valid contrast ratio.
  */
 function calculateContrastRatio(lum1: number, lum2: number): number {
   const lighter = Math.max(lum1, lum2);
@@ -128,6 +184,9 @@ function calculateContrastRatio(lum1: number, lum2: number): number {
 /**
  * Calculate average luminance of a gradient
  * Samples multiple points along the gradient
+ * @param colors - Array of HSL color strings
+ * @returns Average luminance value (0-1)
+ * @remarks This function does not throw errors. Always returns a valid luminance value.
  */
 function calculateGradientLuminance(colors: string[]): number {
   let totalLuminance = 0;
@@ -143,6 +202,9 @@ function calculateGradientLuminance(colors: string[]): number {
 /**
  * Determine the best text color (black or white) for a gradient background
  * Returns the color with better contrast ratio (WCAG AA standard: 4.5:1 for normal text)
+ * @param colors - Array of HSL color strings representing the gradient
+ * @returns Hex color string ('#ffffff' or '#000000')
+ * @remarks This function does not throw errors. Always returns either white or black for optimal contrast.
  */
 export function getAdaptiveTextColor(colors: string[]): string {
   const gradientLuminance = calculateGradientLuminance(colors);
@@ -166,6 +228,12 @@ export function getAdaptiveTextColor(colors: string[]): string {
 
 /**
  * Generate a CSS gradient string
+ * @param colors - Array of color strings (HSL or hex format)
+ * @param type - Gradient type: 'linear', 'radial', or 'conic'
+ * @param random - Random number generator function (0-1)
+ * @param customAngle - Optional custom angle for linear gradients (0-360 degrees)
+ * @returns CSS gradient string
+ * @remarks This function does not throw errors. Empty arrays return a default gradient, single colors return the color itself.
  */
 export function generateGradientCSS(
   colors: string[],
@@ -237,6 +305,14 @@ export interface GradientGenerationOptions {
   angle?: number;
 }
 
+/**
+ * Generate a complete gradient configuration for a floppy disk label
+ * @param labelName - Label name used to generate deterministic gradient (if no custom seed provided)
+ * @param gradientType - Type of gradient: 'linear', 'radial', 'conic', or 'auto' for random selection
+ * @param options - Optional customization: seed, colors, angle
+ * @returns Complete gradient configuration with CSS gradient, text color, and text shadow
+ * @remarks This function does not throw errors. Always returns a valid gradient configuration.
+ */
 export function generateLabelGradient(
   labelName: string,
   gradientType: 'linear' | 'radial' | 'conic' | 'auto' = 'auto',
